@@ -1,0 +1,22 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ../.:/var/www/html:Z
+
+  db:
+    image: docker.io/library/mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: app_db
+      MARIADB_USER: dev_user
+      MARIADB_PASSWORD: dev_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql:Z
+
+volumes:
+  db_data:
