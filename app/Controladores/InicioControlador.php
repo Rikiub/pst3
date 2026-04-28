@@ -1,13 +1,13 @@
 <?php
 
-require_once 'controlador/base.php';
+namespace App\Controladores;
 
-class InicioControlador extends Controlador
+use App\Controladores\BaseControlador;
+
+class InicioControlador extends BaseControlador
 {
     public function vista(): void
     {
         echo $this->render('inicio', ['titulo' => 'Bienvenido']);
     }
 }
-
-new InicioControlador()->parse_url();

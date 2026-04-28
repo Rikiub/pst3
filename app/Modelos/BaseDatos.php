@@ -1,12 +1,17 @@
 <?php
 
+namespace App\Modelos;
+
+use App\Config\DBConfig;
+use PDO;
+
 class BaseDatos
 {
     public function __construct(
-        private string $host = 'localhost',
-        private string $dbname = '',
-        private string $usuario = 'root',
-        private string $clave = '',
+        private string $host = DBConfig::HOST,
+        private string $dbname = DBConfig::DBNAME,
+        private string $usuario = DBConfig::USUARIO,
+        private string $clave = DBConfig::CLAVE,
     ) {
         $this->host = getenv('MARIADB_HOST') ?? $host;
         $this->dbname = getenv('MARIADB_DATABASE') ?? $dbname;

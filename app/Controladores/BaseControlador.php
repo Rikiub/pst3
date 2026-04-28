@@ -1,6 +1,11 @@
 <?php
 
-class Controlador
+namespace App\Controladores;
+
+use Error;
+use Exception;
+
+class BaseControlador
 {
     /* Determinar y ejecutar un metodo del controlador automaticamente segun el parametro "accion" en la URL. */
     public function parse_url(): void
@@ -26,7 +31,7 @@ class Controlador
         extract($datos);
 
         // Ruta del archivo de vista
-        $vista = "vista/{$vista}.php";
+        $vista = "app/Vistas/{$vista}.php";
 
         if (!file_exists($vista)) {
             throw new Exception('Vista no encontrada: ' . $vista);
@@ -34,12 +39,12 @@ class Controlador
 
         // Extraer HTML de la vista
         ob_start();
-        require $vista;
+        include $vista;
         $BODY = ob_get_clean();
 
         // Insertar HTML en la plantilla base
         ob_start();
-        require 'vista/base.php';
+        include 'app/Vistas/_base.php';
         $BODY = ob_get_clean();
 
         return $BODY;

@@ -1,13 +1,13 @@
 <?php
 
-require_once 'controlador/base.php';
+namespace App\Controladores;
 
-class UsuarioControlador extends Controlador
+use App\Controladores\BaseControlador;
+
+class UsuarioControlador extends BaseControlador
 {
     public function vista(): void
     {
         echo $this->render('usuario', ['titulo' => 'Usuarios']);
     }
 }
-
-new UsuarioControlador()->parse_url();
