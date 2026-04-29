@@ -23,8 +23,8 @@
                     <i class="fas fa-chevron-down toggle-icon"></i>
                 </div>
                 <div class="group-items" id="mod1">
-                    <a href="clientes_registrar.php"><i class="fas fa-user-plus"></i> <span>Registro único digital de clientes</span></a>
-                    <a href="clientes_estado.php"><i class="fas fa-tag"></i> <span>Estado de inscripción (Activo/Vencido/Moroso)</span></a>
+                    <a href="clientes_registrar.php"><i class="fas fa-user-plus"></i> <span>Registro de clientes</span></a>
+                    <a href="clientes_estado.php"><i class="fas fa-tag"></i> <span>Estado de inscripción</span></a>
                     <a href="clientes_historial_pagos.php"><i class="fas fa-history"></i> <span>Historial de pagos</span></a>
                     <a href="clientes_medidas.php"><i class="fas fa-chart-line"></i> <span>Medidas biométricas y nutrición</span></a>
                 </div>
