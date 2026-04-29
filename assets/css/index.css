@@ -1,9 +1,5 @@
 @import url(reset.css);
 
-@import url("componentes/sidebar.css");
-
-@import url(rutas/inicio.css);
-
 body {
     background-color: aliceblue;
 }
