@@ -2,7 +2,7 @@
 
 namespace App\Controladores;
 
-use App\Controladores\BaseControlador;
+use App\Core\BaseControlador;
 
 class InicioControlador extends BaseControlador
 {

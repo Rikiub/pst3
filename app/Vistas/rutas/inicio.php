@@ -1,4 +1,4 @@
-<? $this->layout('layouts/base', ['titulo' => 'Inicio']) ?>
+<? $this->layout('layouts/default', ['titulo' => 'Inicio']) ?>
 
 <script defer src="/assets/js/rutas/inicio.js"></script>
 

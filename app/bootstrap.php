@@ -1,15 +1,23 @@
 <?php
 
-// Ubicacion de los controladores
-const CONTROLADORES_DIR = 'App\Controladores';
+use DI\ContainerBuilder;
+
+// Constantes
+const CONTROLADORES_NAMESPACE = 'App\Controladores';
+const CONTAINER_FILE = 'config/container.php';
 
 // Configurar rutas
-$dispatcher = FastRoute\simpleDispatcher(require 'app/rutas.php');
+$dispatcher = FastRoute\simpleDispatcher(require 'config/rutas.php');
 
 // Obtener metodo y URI
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 $uri = rawurldecode(parse_url($uri, PHP_URL_PATH));
+
+// Configurar inyector de dependencias (PHP-DI)
+$builder = new ContainerBuilder();
+$builder->addDefinitions(CONTAINER_FILE);
+$container = $builder->build();
 
 $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($rutaInfo[0]) {
@@ -30,17 +38,18 @@ switch ($rutaInfo[0]) {
         $vars = $rutaInfo[2];
 
         [$clase, $metodo] = $handler;
-        $clase = CONTROLADORES_DIR . "\\$clase";
+        $clase = CONTROLADORES_NAMESPACE . "\\$clase";
 
         if (class_exists($clase)) {
-            $controlador = new $clase();
+            // Obtener controlador e inyectar sus dependencias
+            $controlador = $container->get($clase);
 
-            // Pasar variables de la ruta como argumentos para el metodo
-            $resultado = call_user_func_array([$controlador, $metodo], $vars);
+            // Ejecutar controlador junto a su metodo.
+            $respuesta = $controlador->$metodo($vars);
 
-            // Mostrar resultado como string
+            // Mostrar respuesta como string
             // Si es HTML, el navegador lo renderizara.
-            echo $resultado;
+            echo $respuesta;
         } else {
             http_response_code(500);
             echo "Clase-controlador '$clase' no encontrado";

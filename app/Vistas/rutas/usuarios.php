@@ -1,4 +1,4 @@
-<? $this->layout('layouts/base', ['titulo' => 'Usuarios']) ?>
+<? $this->layout('layouts/default', ['titulo' => 'Usuarios']) ?>
 
 <h1>Usuarios</h1>
 

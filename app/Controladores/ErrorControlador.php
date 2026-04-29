@@ -2,13 +2,14 @@
 
 namespace App\Controladores;
 
-use App\Controladores\BaseControlador;
+use App\Core\BaseControlador;
 
 class ErrorControlador extends BaseControlador
 {
     public function index(): string
     {
         $code = $_GET['code'];
+        $mensaje = '';
 
         if ($code == '404') {
             $mensaje = '404: Pagina no encontrada';
@@ -18,7 +19,7 @@ class ErrorControlador extends BaseControlador
 
         return $this->render(
             'rutas/error',
-            ['error' => $mensaje],
+            ['mensaje' => $mensaje],
         );
     }
 }

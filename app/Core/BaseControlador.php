@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controladores;
+namespace App\Core;
 
 use League\Plates\Engine;
 
-class BaseControlador
+abstract class BaseControlador
 {
     public function __construct(
-        protected Engine $templates = new Engine('app/Vistas')
+        protected Engine $templates
     ) {
         $this->templates = $templates;
     }
