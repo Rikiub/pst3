@@ -1,10 +1,10 @@
 <?php
 
-/** @var array<\App\Dto\UsuarioDto> $data */
+/** @var array<\App\Dto\UsuarioDto> $items */
 ?>
 
 <h1>Usuarios</h1>
 
-<?php foreach ($data as $d): ?>
+<?php foreach ($items as $d): ?>
     <p><?= $d->cedula_persona ?></p>
 <?php endforeach ?>

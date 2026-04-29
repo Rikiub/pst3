@@ -6,8 +6,11 @@ use App\Controladores\BaseControlador;
 
 class UsuarioControlador extends BaseControlador
 {
-    public function vista(): void
+    public function index(): void
     {
-        echo $this->render('usuario', ['titulo' => 'Usuarios']);
+        echo $this->render('usuarios/index', [
+            'titulo' => 'Usuarios',
+            'items' => [],
+        ]);
     }
 }

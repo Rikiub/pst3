@@ -6,7 +6,7 @@ use App\Controladores\BaseControlador;
 
 class InicioControlador extends BaseControlador
 {
-    public function vista(): void
+    public function index(): void
     {
         echo $this->render('inicio', ['titulo' => 'Bienvenido']);
     }

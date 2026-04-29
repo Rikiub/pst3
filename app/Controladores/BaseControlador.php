@@ -2,26 +2,10 @@
 
 namespace App\Controladores;
 
-use Error;
 use Exception;
 
 class BaseControlador
 {
-    /* Determinar y ejecutar un metodo del controlador automaticamente segun el parametro "accion" en la URL. */
-    public function parse_url(): void
-    {
-        $accion = $_GET['accion'] ?? null;
-
-        if (!$accion) {
-            throw new Error('Se requiere una accion');
-        }
-        if (!method_exists($this, $accion)) {
-            throw new Error("Accion ' . $accion . ' no encontrada en {$this}.");
-        }
-
-        $this->$accion();
-    }
-
     /**
      * @param array<int,string> $datos
      */
