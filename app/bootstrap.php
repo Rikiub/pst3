@@ -6,7 +6,7 @@ use App\Controladores\ErrorControlador;
 const CONTROLADORES_DIR = 'App\Controladores';
 
 // Configurar rutas
-$dispatcher = FastRoute\cachedDispatcher(require 'app/rutas.php');
+$dispatcher = FastRoute\simpleDispatcher(require 'app/rutas.php');
 
 // Obtener metodo y URI
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -38,7 +38,11 @@ switch ($rutaInfo[0]) {
             $controlador = new $clase();
 
             // Pasar variables de la ruta como argumentos para el metodo
-            call_user_func_array([$controlador, $metodo], $vars);
+            $resultado = call_user_func_array([$controlador, $metodo], $vars);
+
+            // Mostrar resultado como string
+            // Si es HTML, el navegador lo renderizara.
+            echo $resultado;
         } else {
             http_response_code(500);
             echo "Clase-controlador '$clase' no encontrado";

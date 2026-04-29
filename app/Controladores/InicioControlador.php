@@ -6,8 +6,8 @@ use App\Controladores\BaseControlador;
 
 class InicioControlador extends BaseControlador
 {
-    public function index(): void
+    public function index(): string
     {
-        echo $this->render('inicio', ['titulo' => 'Bienvenido']);
+        return $this->render('inicio');
     }
 }

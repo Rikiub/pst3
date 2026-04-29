@@ -6,11 +6,10 @@ use App\Controladores\BaseControlador;
 
 class UsuarioControlador extends BaseControlador
 {
-    public function index(): void
+    public function index(): string
     {
-        echo $this->render('usuarios/index', [
-            'titulo' => 'Usuarios',
-            'items' => [],
+        return $this->render('usuarios/index', [
+            'items' => []
         ]);
     }
 }

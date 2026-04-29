@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<? // Componente principal donde importar todas las librerias ?>
 
 <head>
     <meta charset="UTF-8">
@@ -9,13 +8,5 @@
     <link rel="icon" href="/recursos/img/favicon.png">
     <link rel="stylesheet" href="/recursos/css/styles.css">
 
-    <title><?= $titulo ?? 'Sofit Gym' ?></title>
+    <title><?= $this->e($titulo ?? 'Sofit Gym') ?></title>
 </head>
-
-<body>
-    <?= include 'app/Vistas/componentes/header.php' ?>
-
-    <div>
-        <?= $BODY ?>
-    </div>
-<body/>

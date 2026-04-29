@@ -6,8 +6,11 @@ use App\Controladores\BaseControlador;
 
 class ErrorControlador extends BaseControlador
 {
-    public function index(string $razonError): void
+    public function index(string $razonError): string
     {
-        echo $this->render('error', ['titulo' => 'No encontrado', 'error' => $razonError]);
+        return $this->render(
+            'error',
+            ['error' => $razonError],
+        );
     }
 }
