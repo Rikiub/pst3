@@ -1,3 +1,3 @@
 <?php
 
-require 'app/init.php';
+require 'app/bootstrap.php';
