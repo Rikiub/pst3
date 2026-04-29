@@ -4,11 +4,11 @@
 <? $this->insert('componentes/head', ['titulo' => $titulo ?? null]) ?>
 
 <body>
-    <nav>
-        <a>Inicio</a>
-    </nav>
-
-    <div>
-        <?= $this->section('content') ?>
+    <div class="app">
+        <? $this->insert('componentes/sidebar') ?>
+        
+        <div>
+            <?= $this->section('content') ?>
+        </div>
     </div>
 <body/>

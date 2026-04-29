@@ -1,7 +1,5 @@
 <?php
 
-use App\Controladores\ErrorControlador;
-
 // Ubicacion de los controladores
 const CONTROLADORES_DIR = 'App\Controladores';
 
@@ -16,15 +14,15 @@ $uri = rawurldecode(parse_url($uri, PHP_URL_PATH));
 $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($rutaInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        // Si no se encuentra la ruta, ir a pagina de error.
+        // Si no se encuentra la ruta, redirigir a pagina de error.
         http_response_code(404);
-        new ErrorControlador()->index('404: Pagina no encontrada');
+        header('Location: /error?code=404');
         break;
 
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        // Si el metodo no se permite, ir a pagina de error.
+        // Si el metodo no se permite, redirigir a pagina de error.
         http_response_code(405);
-        new ErrorControlador()->index('405: Metodo no permitido');
+        header('Location: /error?code=405');
         break;
 
     case FastRoute\Dispatcher::FOUND:

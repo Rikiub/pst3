@@ -1,0 +1,204 @@
+@scope (.Sidebar) {
+    /* ========== SIDEBAR (AJUSTADO PARA QUE SE VEAN TODOS LOS MODULOS) ========== */
+    .sidebar {
+        width: 280px;
+        background: rgba(30, 41, 59, 0.85);
+        backdrop-filter: blur(10px);
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto; /* Mantiene tu scroll original por seguridad */
+        z-index: 20;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        transition: width 0.3s ease;
+    }
+
+    /* Ocultar barra de scroll para estética limpia pero mantener funcionalidad */
+    .sidebar::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    .sidebar.collapsed {
+        width: 80px;
+    }
+
+    .sidebar.collapsed .logo-container h2,
+    .sidebar.collapsed .sidebar-nav a span,
+    .sidebar.collapsed .group-title span,
+    .sidebar.collapsed .group-items a span,
+    .sidebar.collapsed .sidebar-footer span {
+        display: none;
+    }
+
+    .sidebar.collapsed .group-items {
+        padding-left: 0;
+    }
+
+    .sidebar.collapsed .group-title {
+        justify-content: center;
+    }
+
+    .sidebar.collapsed .group-title .toggle-icon {
+        display: none;
+    }
+
+    .sidebar.collapsed .sidebar-nav > a {
+        justify-content: center;
+    }
+
+    .sidebar.collapsed .sidebar-nav a i {
+        margin: 0;
+    }
+
+    .sidebar-header {
+        padding: 1rem 1rem; /* Ligeramente más compacto */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .logo-icon {
+        font-size: 1.5rem;
+        color: #dc2626;
+    }
+
+    .logo-container h2 {
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .logo-container h2 span {
+        color: #dc2626;
+    }
+
+    /* MEJORA: FLECHA TRANSPARENTE (SIN RECUADRO BLANCO) */
+    .sidebar-toggle {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 6px;
+        border-radius: 50%;
+        transition: background 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .sidebar.collapsed .sidebar-toggle i {
+        transform: rotate(180deg);
+    }
+
+    .sidebar-nav {
+        padding: 0 0.8rem;
+        flex: 1;
+    }
+
+    .sidebar-nav > a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0.5rem 0.8rem; /* Reducido para que quepan todos */
+        color: #e2e8f0;
+        text-decoration: none;
+        border-radius: 12px;
+        margin: 0.3rem 0; /* Espacio optimizado */
+    }
+
+    .sidebar-nav > a:hover,
+    .sidebar-nav > a.active {
+        background: #dc2626;
+        color: white;
+    }
+
+    .nav-group {
+        margin-bottom: 0.4rem; /* Reducido de 0.8rem */
+    }
+
+    .group-title {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #cbd5e1;
+        padding: 0.5rem 0.8rem; /* Reducido para ganar espacio vertical */
+        cursor: pointer;
+        border-radius: 12px;
+    }
+
+    .group-title i:first-child {
+        min-width: 20px;
+        text-align: center;
+    }
+
+    .group-title span {
+        flex: 1;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    .group-title:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-icon {
+        transition: transform 0.2s;
+    }
+
+    .group-items {
+        padding-left: 2.8rem;
+        display: none;
+        flex-direction: column;
+    }
+
+    .group-items a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0.4rem 0.8rem;
+        color: #cbd5e1;
+        text-decoration: none;
+        border-radius: 12px;
+        margin-bottom: 2px;
+    }
+
+    .group-items a:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+    .sidebar-footer {
+        padding: 0.8rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.7rem;
+        text-align: left;
+    }
+
+    .sidebar-footer i {
+        margin-right: 6px;
+    }
+
+    .sidebar-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0.6rem 0;
+    }
+}

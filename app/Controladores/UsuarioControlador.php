@@ -8,7 +8,7 @@ class UsuarioControlador extends BaseControlador
 {
     public function index(): string
     {
-        return $this->render('usuarios/index', [
+        return $this->render('rutas/usuarios', [
             'items' => []
         ]);
     }

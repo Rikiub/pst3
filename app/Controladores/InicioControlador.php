@@ -8,6 +8,6 @@ class InicioControlador extends BaseControlador
 {
     public function index(): string
     {
-        return $this->render('inicio');
+        return $this->render('rutas/inicio');
     }
 }

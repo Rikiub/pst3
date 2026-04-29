@@ -6,11 +6,19 @@ use App\Controladores\BaseControlador;
 
 class ErrorControlador extends BaseControlador
 {
-    public function index(string $razonError): string
+    public function index(): string
     {
+        $code = $_GET['code'];
+
+        if ($code == '404') {
+            $mensaje = '404: Pagina no encontrada';
+        } else if ($code == '405') {
+            $mensaje = '405: Metodo no soportado';
+        }
+
         return $this->render(
-            'error',
-            ['error' => $razonError],
+            'rutas/error',
+            ['error' => $mensaje],
         );
     }
 }
