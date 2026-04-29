@@ -1,3 +1,5 @@
+<script defer src="/assets/js/componentes/sidebar.js"></script>
+
 <div class="Sidebar">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
