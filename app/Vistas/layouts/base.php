@@ -17,6 +17,10 @@
     <link rel="icon" href="/assets/img/favicon.png">
     <link rel="stylesheet" href="/assets/css/index.css">
 
+    <? // TODO: Esto deberia guardarse como archivos en la carpeta "lib" ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&display=swap">
+
     <?= $this->section('head') ?>
 
     <title><?= $this->e($titulo ?? 'Sofit Gym') ?></title>
@@ -26,4 +30,4 @@
     <div class="app">
         <?= $this->section('content') ?>
     </div>
-<body/>
+</body>

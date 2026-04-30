@@ -1,7 +1,7 @@
-<?php $this->start('head') ?>
+<? $this->push('head') ?>
     <link rel="stylesheet" href="/assets/css/componentes/sidebar.css">
     <script defer src="/assets/js/componentes/sidebar.js"></script>
-<?php $this->stop() ?>
+<? $this->end() ?>
 
 <div class="Sidebar">
     <aside class="sidebar" id="sidebar">
