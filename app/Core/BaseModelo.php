@@ -8,7 +8,5 @@ abstract class BaseModelo
 {
     public function __construct(
         protected PDO $pdo
-    ) {
-        $this->pdo = $pdo;
-    }
+    ) {}
 }

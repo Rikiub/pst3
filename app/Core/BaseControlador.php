@@ -2,15 +2,13 @@
 
 namespace App\Core;
 
+use DI\Attribute\Inject;
 use League\Plates\Engine;
 
 abstract class BaseControlador
 {
-    public function __construct(
-        protected Engine $templates
-    ) {
-        $this->templates = $templates;
-    }
+    #[Inject]
+    protected Engine $templates;
 
     public function render(string $vista, array $datos = []): string
     {

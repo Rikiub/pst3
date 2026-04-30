@@ -4,10 +4,11 @@ use DI\ContainerBuilder;
 
 // Constantes
 const CONTROLADORES_NAMESPACE = 'App\Controladores';
+const RUTAS_FILE = 'config/rutas.php';
 const CONTAINER_FILE = 'config/container.php';
 
 // Configurar rutas
-$dispatcher = FastRoute\simpleDispatcher(require 'config/rutas.php');
+$dispatcher = FastRoute\simpleDispatcher(require RUTAS_FILE);
 
 // Obtener metodo y URI
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -16,7 +17,7 @@ $uri = rawurldecode(parse_url($uri, PHP_URL_PATH));
 
 // Configurar inyector de dependencias (PHP-DI)
 $builder = new ContainerBuilder();
-$builder->addDefinitions(CONTAINER_FILE);
+$builder->addDefinitions(CONTAINER_FILE)->useAttributes(true);
 $container = $builder->build();
 
 $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
