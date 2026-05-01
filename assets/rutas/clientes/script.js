@@ -1,4 +1,8 @@
-const grid = new gridjs.Grid({
+import { createGrid } from "/assets/js/grid.js";
+
+const tableEl = document.getElementById("table");
+
+const grid = createGrid({
     columns: [
         "Cedula",
         "Nombre",
@@ -16,4 +20,5 @@ const grid = new gridjs.Grid({
             item.telefono,
         ]),
     },
-}).render(document.getElementById("table"));
+});
+grid.render(tableEl);
