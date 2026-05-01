@@ -21,13 +21,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&display=swap">
 
+    <? // Grid JS ?>
+    <script type="module" src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css">
+
     <?= $this->section('head') ?>
 
     <title><?= $this->e($titulo ?? 'Sofit Gym') ?></title>
 </head>
 
+<style>
+    html {
+        overflow-y: scroll;
+        scrollbar-width: thin;
+    }
+</style>
+
 <body>
-    <div class="app">
+    <div id="app">
         <?= $this->section('content') ?>
     </div>
 </body>

@@ -3,7 +3,6 @@
 use DI\ContainerBuilder;
 
 // Constantes
-const CONTROLADORES_NAMESPACE = 'App\Controladores';
 const RUTAS_FILE = 'config/rutas.php';
 const CONTAINER_FILE = 'config/container.php';
 
@@ -39,7 +38,6 @@ switch ($rutaInfo[0]) {
         $vars = $rutaInfo[2];
 
         [$clase, $metodo] = $handler;
-        $clase = CONTROLADORES_NAMESPACE . "\\$clase";
 
         if (class_exists($clase)) {
             // Obtener controlador e inyectar sus dependencias

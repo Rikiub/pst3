@@ -4,8 +4,8 @@
     <? // TODO: Esto deberia guardarse como archivos en la carpeta "lib" ?>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <link rel="stylesheet" href="/assets/css/rutas/inicio.css">
-    <script defer src="/assets/js/rutas/inicio.js"></script>
+    <link rel="stylesheet" href="/assets/rutas/inicio/inicio.css">
+    <script defer src="/assets/rutas/inicio/inicio.js"></script>
 <? $this->stop() ?>
 
 <div class="Inicio">
