@@ -1,3 +1,5 @@
-.table {
-    overflow-x: auto;
+.dialog-form {
+    .content {
+        display: flex;
+    }
 }

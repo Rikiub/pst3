@@ -35,3 +35,21 @@ export function createGrid(config) {
     });
     return grid;
 }
+
+export function crudButtons(onModificar, onEliminar) {
+    return {
+        name: "Acciones",
+        formatter: (cell, row) => {
+            return gridjs.h("div", { className: "actions" }, [
+                gridjs.h("button", {
+                    className: "btn-edit",
+                    onClick: () => onModificar(row.cells[0].data),
+                }, "Editar"),
+                gridjs.h("button", {
+                    className: "btn-delete",
+                    onClick: () => onEliminar(row.cells[0].data),
+                }, "Eliminar")
+            ]);
+        }
+    }
+}
