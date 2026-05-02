@@ -1,8 +1,8 @@
-<? $this->layout('layouts/base', ['titulo' => $titulo ?? null]) ?>
+<?php $this->layout('layouts/base', ['titulo' => $titulo ?? null]) ?>
 
-<? $this->push('head') ?>
+<?php $this->push('head') ?>
     <link rel="stylesheet" href="/assets/layouts/default/styles.css">
-<? $this->end() ?>
+<?php $this->end() ?>
 
 <div class="LayoutDefault">
     <?= $this->insert('componentes/sidebar') ?>

@@ -1,11 +1,11 @@
-<? $this->layout('layouts/default', ['titulo' => 'Clientes']) ?>
+<?php $this->layout('layouts/default', ['titulo' => 'Clientes']) ?>
 
-<? $this->push('head') ?>
+<?php $this->push('head') ?>
     <link rel="stylesheet" href="/assets/rutas/clientes/styles.css">
     <script type="module" src="/assets/rutas/clientes/script.js"></script>
-<? $this->stop() ?>
+<?php $this->stop() ?>
 
-<? $this->insert('componentes/dialog', [
+<?php $this->insert('componentes/dialog', [
     'id' => 'dialog',
     'titulo' => 'Eliminar',
     'content' => 'rutas/clientes/modal_form',
