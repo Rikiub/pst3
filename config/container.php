@@ -1,11 +1,32 @@
 <?php
 
+use CuyZ\Valinor\Mapper\TreeMapper;
+use CuyZ\Valinor\Normalizer\Format;
+use CuyZ\Valinor\Normalizer\Normalizer;
+use CuyZ\Valinor\MapperBuilder;
+use CuyZ\Valinor\NormalizerBuilder;
 use League\Plates\Engine;
 
 return [
     // Configurar directorio donde cargar vistas/plantillas
     Engine::class => function () {
         return new Engine('app/Vistas');
+    },
+    // Configurar validador
+    TreeMapper::class => function () {
+        return new MapperBuilder()
+            ->allowScalarValueCasting()
+            ->supportDateFormats(
+                DateTimeInterface::ATOM,
+                'Y-m-d H:i:s',
+                'Y-m-d',
+            )
+            ->mapper();
+    },
+    // Configurar normalizador
+    Normalizer::class => function () {
+        return new NormalizerBuilder()
+            ->normalizer(Format::json());
     },
     // Configurar conexion PDO a la base de datos
     PDO::class => function () {

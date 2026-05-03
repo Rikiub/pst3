@@ -1,1 +1,0 @@
-import "/assets/componentes/dialog/script.js";

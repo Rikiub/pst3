@@ -2,18 +2,20 @@
 
 namespace App\Core;
 
+use CuyZ\Valinor\Mapper\TreeMapper;
 use PDO;
 
 abstract class BaseModelo
 {
     public function __construct(
-        protected PDO $pdo
+        protected PDO $pdo,
+        protected TreeMapper $mapper,
     ) {}
 
     /**
      * Inserta una fila en una tabla.
      */
-    protected function pdoInsert(string $table, array $data): int|false
+    protected function pdoInsert(string $table, array $data)
     {
         $columns = array_keys($data);
         $placeholders = array_map(fn($col) => ":$col", $columns);
@@ -26,11 +28,7 @@ abstract class BaseModelo
         );
 
         $stmt = $this->pdo->prepare($sql);
-
-        if ($stmt->execute($data)) {
-            return $this->pdo->lastInsertId();
-        }
-        return false;
+        $stmt->execute($data);
     }
 
     /**

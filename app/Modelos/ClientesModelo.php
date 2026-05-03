@@ -3,14 +3,58 @@
 namespace App\Modelos;
 
 use App\Core\BaseModelo;
+use App\Core\Validador;
+use DateTimeImmutable;
+use InvalidArgumentException;
+
+class Membresia
+{
+    public function __construct(
+        public ?int $id_membresia = null,
+        public ?int $id_tipo = null,
+        public ?int $id_estado = null,
+        public ?string $tipo = null,
+        public ?string $estado = null,
+        public ?DateTimeImmutable $fecha_inicio = null,
+        public ?DateTimeImmutable $fecha_fin = null,
+    ) {}
+}
+
+class Cliente
+{
+    public function __construct(
+        public string $cedula,
+        public ?string $nombre = null,
+        public ?string $apellido = null,
+        public ?string $correo = null,
+        public ?int $telefono = null,
+        public ?string $direccion = null,
+        public ?bool $activo = true,
+        public ?DateTimeImmutable $fecha_nacimiento = null,
+        public ?DateTimeImmutable $fecha_registro = null,
+        public ?Membresia $membresia = null,
+    ) {}
+
+    public function validarInsert()
+    {
+        if (!$this->cedula) {
+            throw new InvalidArgumentException('Debe tener una cedula');
+        }
+        if (!$this->nombre || !$this->apellido) {
+            throw new InvalidArgumentException('Debe tener nombre y apellido');
+        }
+        if (!$this->membresia) {
+            throw new InvalidArgumentException('Debe tener una membresia');
+        }
+    }
+}
 
 class ClientesModelo extends BaseModelo
 {
     private function sqlSelect(): string
     {
         return 'SELECT
-                cliente.cedula_cliente AS cedula,
-                cliente.id_membresia,
+                cliente.cedula_cliente AS `cedula`,
                 persona.nombre,
                 persona.apellido,
                 persona.correo,
@@ -19,54 +63,137 @@ class ClientesModelo extends BaseModelo
                 persona.fecha_nacimiento,
                 persona.fecha_registro,
                 persona.activo,
-                membresia.fecha_inicio,
-                membresia.fecha_fin,
-                membresia.id_membresia,
-                membresia.id_tipo AS membresia_id_tipo,
-                membresia.id_estado AS membresia_id_estado,
-                tipo_membresia.nombre   AS membresia_tipo_nombre,
-                estado_membresia.nombre AS membresia_estado_nombre
+                JSON_OBJECT(
+                    "id_membresia", m.id_membresia,
+                    "id_tipo", m.id_tipo,
+                    "estado", me.nombre,
+                    "id_estado", m.id_estado,
+                    "tipo", mt.nombre,
+                    "fecha_inicio", m.fecha_inicio,
+                    "fecha_fin", m.fecha_fin
+                ) AS membresia
             FROM cliente
             LEFT JOIN persona ON persona.cedula_persona = cliente.cedula_cliente
-            LEFT JOIN membresia ON cliente.id_membresia = membresia.id_membresia
-            LEFT JOIN tipo_membresia ON membresia.id_tipo = tipo_membresia.id_tipo
-            LEFT JOIN estado_membresia ON membresia.id_estado = estado_membresia.id_estado
+            LEFT JOIN membresia m ON cliente.id_membresia = m.id_membresia
+            LEFT JOIN tipo_membresia mt ON m.id_tipo = mt.id_tipo
+            LEFT JOIN estado_membresia me ON m.id_estado = me.id_estado
         ';
     }
 
-    public function getAll(): array
+    private function mapToCliente(array $row): Cliente
     {
-        $stmt = $this->pdo->prepare(
-            $this->sqlSelect()
-            . 'ORDER BY persona.apellido, persona.nombre'
-        );
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $row['membresia'] = json_decode($row['membresia'], true);
+        return $this->mapper->map(Cliente::class, $row);
     }
 
-    public function getByCedula(string $cedula): ?array
+    /**
+     * @return array<Cliente>
+     */
+    public function getAll()
     {
+        $stmt = $this->pdo->prepare($this->sqlSelect());
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+
+        $data = [];
+        foreach ($rows as $row) {
+            array_push($data, $this->mapToCliente($row));
+        }
+
+        return $data;
+    }
+
+    public function getByCedula(string $cedula): Cliente|false
+    {
+        // Cliente
         $stmt = $this->pdo->prepare(
             $this->sqlSelect()
             . 'WHERE cliente.cedula_cliente = ?'
         );
         $stmt->execute([$cedula]);
-        $row = $stmt->fetch();
-        return $row ?: null;
+        $data = $stmt->fetch();
+
+        if (!$data) {
+            return false;
+        }
+
+        // Build
+        return $this->mapToCliente($data);
     }
 
-    public function insertCliente(array $datos)
+    public function insertCliente(Cliente $cliente): Cliente
     {
-        return $this->pdoInsert('cliente', $datos);
+        $this->pdo->beginTransaction();
+
+        $this->pdoInsert('persona', [
+            'cedula_persona' => $cliente->cedula,
+            'nombre' => $cliente->nombre,
+            'apellido' => $cliente->apellido,
+            'correo' => $cliente->correo,
+            'telefono' => $cliente->telefono,
+            'direccion' => $cliente->direccion,
+            'fecha_nacimiento' => Validador::dateToString($cliente->fecha_nacimiento),
+            'fecha_registro' => Validador::dateToString($cliente->fecha_registro),
+            'activo' => $cliente->activo,
+        ]);
+
+        $membresia = $cliente->membresia;
+        $this->pdoInsert('membresia', [
+            'id_tipo' => $membresia->id_tipo,
+            'id_estado' => $membresia->id_estado,
+            'fecha_inicio' => Validador::dateToString($membresia->fecha_inicio),
+            'fecha_fin' => Validador::dateToString($membresia->fecha_fin),
+        ]);
+        $membresiaId = $this->pdo->lastInsertId();
+
+        $this->pdoInsert('cliente', [
+            'cedula_cliente' => $cliente->cedula,
+            'id_membresia' => $membresiaId,
+        ]);
+
+        $this->pdo->commit();
+
+        return $this->getByCedula($cliente->cedula);
     }
 
-    public function updateCliente(int $cedula, array $datos)
+    public function updateCliente(Cliente $cliente)
     {
-        return $this->pdoUpdate(
-            'cliente',
-            $datos,
-            ['cedula_cliente' => $cedula],
+        $this->pdo->beginTransaction();
+
+        $this->pdoUpdate(
+            'persona', [
+                'nombre' => $cliente->nombre,
+                'apellido' => $cliente->apellido,
+                'correo' => $cliente->correo,
+                'telefono' => $cliente->telefono,
+                'direccion' => $cliente->direccion,
+                'fecha_nacimiento' => Validador::dateToString($cliente->fecha_nacimiento),
+                'fecha_registro' => Validador::dateToString($cliente->fecha_registro),
+                'activo' => $cliente->activo,
+            ],
+            ['cedula_persona' => $cliente->cedula]
         );
+
+        if ($cliente->membresia) {
+            $membresia = $cliente->membresia;
+
+            $stmt = $this->pdo->prepare('SELECT id_membresia FROM membresia WHERE id_membresia = ?');
+            $stmt->execute([$membresia->id_membresia]);
+            $membresiaId = $stmt->fetchColumn();
+
+            $this->pdoUpdate(
+                'membresia',
+                [
+                    'id_tipo' => $membresia->id_tipo,
+                    'id_estado' => $membresia->id_estado,
+                    'fecha_inicio' => Validador::dateToString($membresia->fecha_inicio),
+                    'fecha_fin' => Validador::dateToString($membresia->fecha_fin),
+                ],
+                ['id_membresia' => $membresiaId],
+            );
+        }
+
+        $this->pdo->commit();
     }
 
     public function deleteByCedula(int $cedula): int

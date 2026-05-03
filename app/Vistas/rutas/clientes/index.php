@@ -5,16 +5,106 @@
     <script type="module" src="/assets/rutas/clientes/script.js"></script>
 <?php $this->stop() ?>
 
-<?php $this->insert('componentes/dialog', [
-    'id' => 'dialog',
-    'titulo' => 'Eliminar',
-    'content' => 'rutas/clientes/modal_form',
-]) ?>
+<dialog closedby="any" id="modal-edit">
+	<article>
+		<header>
+			<h2>Modificar</h2>
+			
+			<button
+				aria-label="Close"
+				rel="prev"
+                command="close"
+                commandfor="modal-edit"
+			>&times;</button>
+		</header>
+
+        <form id="form">
+		    <div class="content">
+                <div class="grid">
+                    <label>Cédula
+                        <input required name="cedula" type="text" placeholder="29135792">
+                    </label>
+
+                    <label>Nombre
+                        <input required name="nombre" type="text" placeholder="Juan">
+                    </label>
+
+                    <label>Apellido
+                        <input required name="apellido" type="text" placeholder="Pérez">
+                    </label>
+                </div>
+
+                <div class="grid">
+                    <label>Teléfono
+                        <input name="telefono" type="tel" placeholder="0414-526949">
+                    </label>
+
+                    <label>Correo
+                        <input name="correo" type="email" placeholder="correo@ejemplo.com">
+                    </label>
+
+                    <label>Dirección
+                        <input name="direccion" type="text" placeholder="Calle Principal #123">
+                    </label>
+
+                    <label>Fecha de Nacimiento
+                        <input name="fecha_nacimiento" type="date">
+                    </label>
+                </div>
+
+                <div class="grid">
+                    <label>Tipo Membresia
+                        <select name="membresia[id_tipo]">
+                            <option selected value="1">Mensual</option>
+                        </select>
+                    </label>
+
+                    <label>Estado Membresia
+                        <select name="membresia[id_estado]">
+                            <option selected value="1">Activo</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="grid">
+                    <label>Fecha Inicio Membresía
+                        <input name="membresia[fecha_inicio]" type="date">
+                    </label>
+            
+                    <label>Fecha Fin Membresía
+                        <input name="membresia[fecha_fin]" type="date">
+                    </label>
+                </div>
+
+                <input hidden name="activo" value="true">
+            </div>
+
+            <footer>
+                <button type="submit">Enviar</button>
+            </footer>
+        </form>
+	</article>
+</dialog>
+
+<dialog closedby="any" id="modal-delete">
+    <article>
+        <header>
+			<h2>Eliminar</h2>
+			
+			<button
+				aria-label="Close"
+				rel="prev"
+                command="close"
+                commandfor="modal-delete"
+			>&times;</button>
+		</header>
+    </article>
+</dialog>
 
 <div class="Clientes">
     <h1>Clientes</h1>
 
-    <button class="btn-insertar" onclick="openDialog('dialog')">Insertar</button>
+    <button id="btn-insertar" class="btn-insertar">Insertar</button>
 
     <div class="table" id="table"></div>
 </div>

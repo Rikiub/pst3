@@ -3,8 +3,8 @@
 use DI\ContainerBuilder;
 
 // Constantes
-const RUTAS_FILE = 'config/rutas.php';
 const CONTAINER_FILE = 'config/container.php';
+const RUTAS_FILE = 'config/rutas.php';
 
 // Configurar rutas
 $dispatcher = FastRoute\simpleDispatcher(require RUTAS_FILE);

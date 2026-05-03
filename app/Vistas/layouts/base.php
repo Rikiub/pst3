@@ -16,14 +16,13 @@
     <!-- Recursos locales -->
     <link rel="icon" href="/assets/img/favicon.png">
     <link rel="stylesheet" href="/assets/css/index.css">
-    <script type="module" src="/assets/js/index.js"></script>
+    <script defer src="/assets/js/index.js"></script>
 
     <!-- Componentes globales -->
-    <script type="module" src="/assets/componentes/sidebar/script.js"></script>
+    <script defer src="/assets/componentes/sidebar/script.js"></script>
     <link rel="stylesheet" href="/assets/componentes/sidebar/styles.css">
 
-    <script type="module" src="/assets/componentes/dialog/script.js"></script>
-    <link rel="stylesheet" href="/assets/componentes/dialog/styles.css">
+    <script defer src="/assets/componentes/dialog/script.js"></script>
 
     <!-- TODO: Esto deberia guardarse como archivos en la carpeta "lib" -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

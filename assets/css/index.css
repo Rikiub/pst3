@@ -1,1 +1,65 @@
 @import url(reset.css);
+
+.grid {
+    display: flex;
+}
+
+button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+dialog {
+    margin: auto;
+    color: black;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    max-width: 700px;
+}
+
+article {
+    header {
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        border-bottom: 1px solid black;
+        padding: 1rem 0;
+
+        button {
+            padding: 0.5rem 1rem;
+        }
+    }
+
+    .content {
+        padding: 1rem 0;
+    }
+
+    footer {
+        display: flex;
+        justify-content: right;
+        border-top: 1px solid black;
+        padding: 1rem 0;
+    }
+}
+
+form {
+    input,
+    select {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    input {
+        background-color: gray;
+        border-radius: 0.2rem;
+        color: white;
+    }
+    input::placeholder {
+        color: gainsboro;
+    }
+
+    label {
+        display: block;
+        margin: 10px;
+    }
+}
