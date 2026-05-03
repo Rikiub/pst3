@@ -8,6 +8,10 @@ class Validador
 {
     public static function dateToString(?DateTimeImmutable $date): ?string
     {
+        if (!$date) {
+            return null;
+        }
+
         // Solo fecha
         $format = 'Y-m-d';
 
@@ -16,6 +20,6 @@ class Validador
             $format = $format . '\TH:i:s';
         }
 
-        return $date ? $date->format($format) : null;
+        return $date->format($format);
     }
 }

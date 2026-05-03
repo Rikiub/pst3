@@ -8,6 +8,7 @@ const form = document.getElementById("form");
 /** @type {HTMLDialogElement} */
 const dialog = document.getElementById("modal-edit");
 
+let ID = "";
 let METHOD = "PUT";
 
 const grid = createGrid({
@@ -35,10 +36,7 @@ grid.render(tableEl);
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    sendData(METHOD).then(() => {
-        dialog.close();
-        grid.forceRender();
-    });
+    handleSubmit();
 });
 
 document.getElementById("btn-insertar").addEventListener("click", (event) => {
@@ -47,8 +45,21 @@ document.getElementById("btn-insertar").addEventListener("click", (event) => {
     dialog.showModal();
 });
 
+async function handleSubmit() {
+    let body = new FormData(form);
+
+    if (METHOD === "POST") {
+        await fetchApi("", { method: "POST", body: body });
+    } else if (METHOD === "PUT") {
+        await fetchApi(`/${ID}`, { method: "PUT", body: body });
+    }
+
+    dialog.close();
+    grid.forceRender();
+}
+
 async function onModificar(id) {
-    const data = await getData(`/${id}`);
+    const data = await fetchApi(`/${id}`);
 
     for (const el of form.elements) {
         if (el.name in data) {
@@ -63,28 +74,25 @@ async function onModificar(id) {
     form.elements["membresia[fecha_inicio]"].value = data.membresia.fecha_inicio.substring(0, 10);
     form.elements["membresia[fecha_fin]"].value = data.membresia.fecha_fin.substring(0, 10);
 
+    ID = id;
     METHOD = "PUT";
     dialog.showModal();
 }
 
 async function onEliminar(id) {
-    await fetch(`${API_ENDPOINT}/${id}`, { method: "DELETE" });
+    await fetchApi(`/${id}`, { method: "DELETE" });
 }
 
-async function getData(params = "") {
-    const res = await fetch(`${API_ENDPOINT}${params}`);
-    const json = await res.json();
-    return json;
-}
-
-async function sendData(method) {
-    const res = await fetch(API_ENDPOINT, {
-        method: method,
-        body: new FormData(form),
+async function fetchApi(params = "", options = {}) {
+    const res = await fetch(`${API_ENDPOINT}${params}`, {
+        ...options
     });
 
     if (!res.ok) {
         console.log(await res.text());
         throw new Error(res.status)
     };
+
+    // console.log(await res.text());
+    return await res.json();
 }

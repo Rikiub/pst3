@@ -76,10 +76,10 @@ class ClientesControlador extends BaseControlador
     /**
      * Modificar
      */
-    public function put(): string
+    public function put(array $vars): string
     {
         try {
-            $cedula = $_POST['cedula'];
+            $cedula = $vars['cedula'];
             $cliente = $this->mapper->map(Cliente::class, $_POST);
 
             $check = $this->modelo->getByCedula($cedula);

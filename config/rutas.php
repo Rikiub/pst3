@@ -15,7 +15,7 @@ return function (RouteCollector $r) {
         $r->addRoute('GET', '/clientes', [ClientesControlador::class, 'get']);
         $r->addRoute('GET', '/clientes/{cedula}', [ClientesControlador::class, 'getFind']);
         $r->addRoute('POST', '/clientes', [ClientesControlador::class, 'post']);
-        $r->addRoute('PUT', '/clientes', [ClientesControlador::class, 'put']);
+        $r->addRoute('PUT', '/clientes/{cedula}', [ClientesControlador::class, 'put']);
         $r->addRoute('DELETE', '/clientes/{cedula}', [ClientesControlador::class, 'delete']);
     });
 };

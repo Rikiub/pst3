@@ -23,7 +23,7 @@ class Membresia
 class Cliente
 {
     public function __construct(
-        public string $cedula,
+        public ?string $cedula = null,
         public ?string $nombre = null,
         public ?string $apellido = null,
         public ?string $correo = null,
