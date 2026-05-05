@@ -7,7 +7,7 @@ use App\Core\Validador;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
-class Membresia
+readonly class Membresia
 {
     public function __construct(
         public ?int $id_membresia = null,
@@ -20,7 +20,7 @@ class Membresia
     ) {}
 }
 
-class Cliente
+readonly class Cliente
 {
     public function __construct(
         public ?string $cedula = null,
@@ -103,7 +103,7 @@ class ClientesModelo extends BaseModelo
         return $data;
     }
 
-    public function getByCedula(string $cedula): Cliente|false
+    public function findByCedula(string $cedula): Cliente|false
     {
         // Cliente
         $stmt = $this->pdo->prepare(
@@ -111,18 +111,19 @@ class ClientesModelo extends BaseModelo
             . 'WHERE cliente.cedula_cliente = ?'
         );
         $stmt->execute([$cedula]);
-        $data = $stmt->fetch();
+        $row = $stmt->fetch();
 
-        if (!$data) {
+        if (!$row) {
             return false;
         }
 
         // Build
-        return $this->mapToCliente($data);
+        return $this->mapToCliente($row);
     }
 
     public function insertCliente(Cliente $cliente): Cliente
     {
+        $cliente->validarInsert();
         $this->pdo->beginTransaction();
 
         $this->pdoInsert('persona', [
@@ -152,11 +153,10 @@ class ClientesModelo extends BaseModelo
         ]);
 
         $this->pdo->commit();
-
-        return $this->getByCedula($cliente->cedula);
+        return $this->findByCedula($cliente->cedula);
     }
 
-    public function updateCliente(Cliente $cliente)
+    public function updateCliente(Cliente $cliente): Cliente
     {
         $this->pdo->beginTransaction();
 
@@ -194,6 +194,7 @@ class ClientesModelo extends BaseModelo
         }
 
         $this->pdo->commit();
+        return $this->findByCedula($cliente->cedula);
     }
 
     public function deleteByCedula(int $cedula): int

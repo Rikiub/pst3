@@ -8,27 +8,7 @@ use CuyZ\Valinor\NormalizerBuilder;
 use League\Plates\Engine;
 
 return [
-    // Configurar directorio donde cargar vistas/plantillas
-    Engine::class => function () {
-        return new Engine('app/Vistas');
-    },
-    // Configurar validador
-    TreeMapper::class => function () {
-        return new MapperBuilder()
-            ->allowScalarValueCasting()
-            ->supportDateFormats(
-                DateTimeInterface::ATOM,
-                'Y-m-d H:i:s',
-                'Y-m-d',
-            )
-            ->mapper();
-    },
-    // Configurar normalizador
-    Normalizer::class => function () {
-        return new NormalizerBuilder()
-            ->normalizer(Format::json());
-    },
-    // Configurar conexion PDO a la base de datos
+    // Conexion PDO a la base de datos
     PDO::class => function () {
         $host = getenv('DB_HOST') ?: 'localhost';
         $database = getenv('DB_DATABASE') ?: 'sofit_gym';
@@ -54,5 +34,27 @@ return [
         } catch (PDOException $e) {
             throw new RuntimeException('Conexion a base de datos fallida: ' . $e->getMessage());
         }
+    },
+    // Directorio donde cargar vistas/plantillas
+    Engine::class => function () {
+        return new Engine('app/Vistas');
+    },
+    // Validador
+    TreeMapper::class => function () {
+        return new MapperBuilder()
+            ->allowScalarValueCasting()
+            ->allowSuperfluousKeys()
+            ->allowUndefinedValues()
+            ->supportDateFormats(
+                DateTimeInterface::ATOM,
+                'Y-m-d H:i:s',
+                'Y-m-d',
+            )
+            ->mapper();
+    },
+    // Normalizador
+    Normalizer::class => function () {
+        return new NormalizerBuilder()
+            ->normalizer(Format::json());
     },
 ];

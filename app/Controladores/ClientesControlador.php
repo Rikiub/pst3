@@ -6,7 +6,6 @@ use App\Core\BaseControlador;
 use App\Modelos\Cliente;
 use App\Modelos\ClientesModelo;
 use DateTimeImmutable;
-use Exception;
 use Throwable;
 
 class ClientesControlador extends BaseControlador
@@ -30,7 +29,7 @@ class ClientesControlador extends BaseControlador
 
     public function getFind(array $vars): ?string
     {
-        $res = $this->modelo->getByCedula($vars['cedula']);
+        $res = $this->modelo->findByCedula($vars['cedula']);
 
         if (!$res) {
             http_response_code(404);
@@ -46,16 +45,14 @@ class ClientesControlador extends BaseControlador
     public function post(): string
     {
         try {
-            // Valida el POST
-            $cedula = $_POST['cedula'];
-            $cliente = $this->mapper->map(Cliente::class, $_POST);
-            $cliente->validarInsert();
+            $body = $this->getRequestData();
+            $body['fecha_registro'] = new DateTimeImmutable();  // Asignar fecha actual
 
-            // Asignar fecha actual
-            $cliente->fecha_registro = new DateTimeImmutable();
+            // Valida el POST
+            $cliente = $this->mapper->map(Cliente::class, $_POST);
 
             // Verificar que el cliente no exista
-            $check = $this->modelo->getByCedula($cedula);
+            $check = $this->modelo->findByCedula($cliente->cedula);
             if ($check) {
                 http_response_code(400);
                 return json_encode(['error' => 'El cliente ya existe']);
@@ -80,15 +77,17 @@ class ClientesControlador extends BaseControlador
     {
         try {
             $cedula = $vars['cedula'];
-            $cliente = $this->mapper->map(Cliente::class, $_POST);
 
-            $check = $this->modelo->getByCedula($cedula);
+            $body = $this->getRequestData();
+            $cliente = $this->mapper->map(Cliente::class, $body);
+
+            $check = $this->modelo->findByCedula($cedula);
             if (!$check) {
                 http_response_code(400);
                 return json_encode(['error' => 'El cliente no existe']);
             }
 
-            $this->modelo->updateCliente($cliente);
+            $cliente = $this->modelo->updateCliente($cliente);
 
             http_response_code(201);
             return $this->objectToJson($cliente);
@@ -105,7 +104,7 @@ class ClientesControlador extends BaseControlador
     {
         $cedula = $vars['cedula'];
 
-        $check = $this->modelo->getByCedula($cedula);
+        $check = $this->modelo->findByCedula($cedula);
         if (!$check) {
             http_response_code(404);
             return json_encode(['error' => 'El cliente no existe']);
