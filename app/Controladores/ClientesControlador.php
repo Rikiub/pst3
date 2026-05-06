@@ -16,7 +16,7 @@ class ClientesControlador extends BaseControlador
 
     public function index(): string
     {
-        return $this->render('rutas/clientes/index', [
+        return $this->render('rutas/clientes', [
             'items' => []
         ]);
     }
