@@ -10,7 +10,7 @@ const RUTAS_FILE = 'config/rutas.php';
 $dispatcher = FastRoute\simpleDispatcher(require RUTAS_FILE);
 
 // Obtener metodo y URI
-$httpMethod = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+$httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 $uri = rawurldecode(parse_url($uri, PHP_URL_PATH));
 

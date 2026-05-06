@@ -48,13 +48,10 @@ document.getElementById("btn-insertar").addEventListener("click", (event) => {
 async function handleSubmit() {
     const formData = new FormData(form);
 
-    let endpoint = "";
-    if (METHOD === "PUT") {
-        formData.set("_method", "PUT");
-        endpoint = `/${ID}`;
-    }
-
-    await fetchApi(endpoint, { method: "POST", body: formData });
+    await fetchApi(
+        METHOD === "PUT" ? `/${ID}` : "",
+        { method: "POST", body: formData }
+    );
 
     dialog.close();
     grid.forceRender();

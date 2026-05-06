@@ -21,13 +21,13 @@ class ClientesControlador extends BaseControlador
         ]);
     }
 
-    public function get(): string
+    public function getClientes(): string
     {
         $clientes = $this->modelo->getAll();
         return $this->jsonResponse($clientes);
     }
 
-    public function getFind(array $vars): ?string
+    public function findCliente(array $vars): ?string
     {
         $cliente = $this->modelo->findByCedula($vars['cedula']);
 
@@ -42,7 +42,7 @@ class ClientesControlador extends BaseControlador
     /**
      * Crear
      */
-    public function post(): string
+    public function insertCliente(): string
     {
         try {
             $body = $this->getRequestBody();
@@ -70,7 +70,7 @@ class ClientesControlador extends BaseControlador
     /**
      * Modificar
      */
-    public function put(array $vars): string
+    public function updateCliente(array $vars): string
     {
         try {
             $cedula = $vars['cedula'];
@@ -95,7 +95,7 @@ class ClientesControlador extends BaseControlador
     /**
      * Eliminar
      */
-    public function delete(array $vars): string|null
+    public function deleteCliente(array $vars): string|null
     {
         $cedula = $vars['cedula'];
 

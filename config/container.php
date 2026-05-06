@@ -50,6 +50,10 @@ return [
                 'Y-m-d H:i:s',
                 'Y-m-d',
             )
+            ->registerConverter(
+                // Si la string esta vacia, convertir a null
+                fn(string $value): ?string => $value === '' ? null : $value
+            )
             ->mapper();
     },
     // Normalizador

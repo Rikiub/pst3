@@ -75,8 +75,6 @@
                         <input name="membresia[fecha_fin]" type="date">
                     </label>
                 </div>
-
-                <input hidden name="activo" value="true">
             </div>
 
             <footer>
