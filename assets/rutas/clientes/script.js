@@ -46,13 +46,15 @@ document.getElementById("btn-insertar").addEventListener("click", (event) => {
 });
 
 async function handleSubmit() {
-    let body = new FormData(form);
+    const formData = new FormData(form);
 
-    if (METHOD === "POST") {
-        await fetchApi("", { method: "POST", body: body });
-    } else if (METHOD === "PUT") {
-        await fetchApi(`/${ID}`, { method: "PUT", body: body });
+    let endpoint = "";
+    if (METHOD === "PUT") {
+        formData.set("_method", "PUT");
+        endpoint = `/${ID}`;
     }
+
+    await fetchApi(endpoint, { method: "POST", body: formData });
 
     dialog.close();
     grid.forceRender();
@@ -84,9 +86,7 @@ async function onEliminar(id) {
 }
 
 async function fetchApi(params = "", options = {}) {
-    const res = await fetch(`${API_ENDPOINT}${params}`, {
-        ...options
-    });
+    const res = await fetch(`${API_ENDPOINT}${params}`, { ...options });
 
     if (!res.ok) {
         console.log(await res.text());

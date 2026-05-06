@@ -46,11 +46,11 @@ abstract class BaseControlador
             $rawInput = file_get_contents('php://input');
             $data = json_decode($rawInput, true);
 
-            if (json_last_error() === JSON_ERROR_NONE && is_array($data)) {
-                return $data;
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('JSON invalido');
             }
 
-            throw new Exception('JSON invalido');
+            return $data;
         }
 
         // Si el contenido es form POST, entonces devolver directamente

@@ -76,6 +76,8 @@ class ClientesControlador extends BaseControlador
             $cedula = $vars['cedula'];
 
             $body = $this->getRequestBody();
+            $body['cedula'] = $cedula;
+
             $cliente = $this->mapper->map(Cliente::class, $body);
 
             $check = $this->modelo->findByCedula($cedula);

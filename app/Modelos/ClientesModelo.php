@@ -158,6 +158,7 @@ class ClientesModelo extends BaseModelo
 
     public function updateCliente(Cliente $cliente): Cliente
     {
+        $cliente->validarInsert();
         $this->pdo->beginTransaction();
 
         $this->pdoUpdate(
@@ -175,12 +176,11 @@ class ClientesModelo extends BaseModelo
         );
 
         if ($cliente->membresia) {
-            $membresia = $cliente->membresia;
-
-            $stmt = $this->pdo->prepare('SELECT id_membresia FROM membresia WHERE id_membresia = ?');
-            $stmt->execute([$membresia->id_membresia]);
+            $stmt = $this->pdo->prepare('SELECT id_membresia FROM cliente WHERE cedula_cliente = ?');
+            $stmt->execute([$cliente->cedula]);
             $membresiaId = $stmt->fetchColumn();
 
+            $membresia = $cliente->membresia;
             $this->pdoUpdate(
                 'membresia',
                 [
