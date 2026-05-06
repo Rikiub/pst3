@@ -20,11 +20,11 @@
     <script type="importmap">
         {
             "imports": {
-                "gridjs": "/lib/gridjs/gridjs.module.js"
+                "gridjs": "/assets/lib/gridjs/gridjs.module.js"
             }
         }
     </script>
-    <link rel="stylesheet" href="/lib/gridjs/mermaid.min.css"> <!-- GridJS -->
+    <link rel="stylesheet" href="/assets/lib/gridjs/mermaid.min.css"> <!-- GridJS -->
 
     <!-- TODO: Esto deberia guardarse como archivos en la carpeta "lib" -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
