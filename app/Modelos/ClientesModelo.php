@@ -53,31 +53,32 @@ class ClientesModelo extends BaseModelo
 {
     private function sqlSelect(): string
     {
-        return 'SELECT
-                cliente.cedula_cliente AS `cedula`,
-                persona.nombre,
-                persona.apellido,
-                persona.correo,
-                persona.telefono,
-                persona.direccion,
-                persona.fecha_nacimiento,
-                persona.fecha_registro,
-                persona.activo,
-                JSON_OBJECT(
-                    "id_membresia", m.id_membresia,
-                    "id_tipo", m.id_tipo,
-                    "estado", me.nombre,
-                    "id_estado", m.id_estado,
-                    "tipo", mt.nombre,
-                    "fecha_inicio", m.fecha_inicio,
-                    "fecha_fin", m.fecha_fin
-                ) AS membresia
-            FROM cliente
-            LEFT JOIN persona ON persona.cedula_persona = cliente.cedula_cliente
-            LEFT JOIN membresia m ON cliente.id_membresia = m.id_membresia
-            LEFT JOIN tipo_membresia mt ON m.id_tipo = mt.id_tipo
-            LEFT JOIN estado_membresia me ON m.id_estado = me.id_estado
-        ';
+        return <<<SQL
+                SELECT
+                    cliente.cedula_cliente AS `cedula`,
+                    persona.nombre,
+                    persona.apellido,
+                    persona.correo,
+                    persona.telefono,
+                    persona.direccion,
+                    persona.fecha_nacimiento,
+                    persona.fecha_registro,
+                    persona.activo,
+                    JSON_OBJECT(
+                        "id_membresia", m.id_membresia,
+                        "id_tipo", m.id_tipo,
+                        "estado", me.nombre,
+                        "id_estado", m.id_estado,
+                        "tipo", mt.nombre,
+                        "fecha_inicio", m.fecha_inicio,
+                        "fecha_fin", m.fecha_fin
+                    ) AS membresia
+                FROM cliente
+                LEFT JOIN persona ON persona.cedula_persona = cliente.cedula_cliente
+                LEFT JOIN membresia m ON cliente.id_membresia = m.id_membresia
+                LEFT JOIN tipo_membresia mt ON m.id_tipo = mt.id_tipo
+                LEFT JOIN estado_membresia me ON m.id_estado = me.id_estado
+            SQL;
     }
 
     private function mapToCliente(array $row): Cliente
@@ -107,8 +108,10 @@ class ClientesModelo extends BaseModelo
     {
         // Cliente
         $stmt = $this->pdo->prepare(
-            $this->sqlSelect()
-            . 'WHERE cliente.cedula_cliente = ?'
+            <<<SQL
+                {$this->sqlSelect()}
+                WHERE cliente.cedula_cliente = ?
+            SQL
         );
         $stmt->execute([$cedula]);
         $row = $stmt->fetch();
@@ -119,6 +122,22 @@ class ClientesModelo extends BaseModelo
 
         // Build
         return $this->mapToCliente($row);
+    }
+
+    public function getEstadosMembresia(): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM estado_membresia');
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
+    public function getTiposMembresia(): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM tipo_membresia');
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
     }
 
     public function insertCliente(Cliente $cliente): Cliente

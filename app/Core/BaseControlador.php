@@ -37,7 +37,7 @@ abstract class BaseControlador
     /**
      * Intentar obtener los datos desde el POST o JSON
      */
-    function getRequestBody(): array
+    function getParsedBody(): array
     {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 

@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var array $tipos
+ * @var array $estados
+ */
+?>
+
 <?php $this->layout('layouts/default', ['titulo' => 'Clientes']) ?>
 
 <?php $this->push('head') ?>
@@ -55,13 +63,21 @@
                 <div class="grid">
                     <label>Tipo Membresia
                         <select name="membresia[id_tipo]">
-                            <option selected value="1">Mensual</option>
+                            <?php foreach ($estados as $item): ?>
+                                <option value="<?= $item['id_tipo'] ?>">
+                                    <?= $item['nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
                     </label>
 
                     <label>Estado Membresia
                         <select name="membresia[id_estado]">
-                            <option selected value="1">Activo</option>
+                            <?php foreach ($tipos as $item): ?>
+                                <option value="<?= $item['id_estado'] ?>">
+                                    <?= $item['nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
                     </label>
                 </div>

@@ -16,8 +16,12 @@ class ClientesControlador extends BaseControlador
 
     public function index(): string
     {
+        $tipos = $this->modelo->getEstadosMembresia();
+        $estados = $this->modelo->getTiposMembresia();
+
         return $this->render('rutas/clientes', [
-            'items' => []
+            'tipos' => $tipos,
+            'estados' => $estados,
         ]);
     }
 
@@ -45,7 +49,7 @@ class ClientesControlador extends BaseControlador
     public function insertCliente(): string
     {
         try {
-            $body = $this->getRequestBody();
+            $body = $this->getParsedBody();
             $body['fecha_registro'] = new DateTimeImmutable();  // Asignar fecha actual
 
             // Valida el POST
@@ -75,7 +79,7 @@ class ClientesControlador extends BaseControlador
         try {
             $cedula = $vars['cedula'];
 
-            $body = $this->getRequestBody();
+            $body = $this->getParsedBody();
             $body['cedula'] = $cedula;
 
             $cliente = $this->mapper->map(Cliente::class, $body);
