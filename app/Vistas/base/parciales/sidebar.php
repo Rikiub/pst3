@@ -1,8 +1,3 @@
-<?php $this->push('head') ?>
-	<link rel="stylesheet" href="/assets/componentes/sidebar/styles.css">
-	<script defer src="/assets/componentes/sidebar/script.js"></script>
-<?php $this->end() ?>
-
 <aside class="sidebar" id="sidebar">
 	<div class="sidebar-header">
 		<div class="logo-container">

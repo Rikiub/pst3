@@ -1,6 +1,6 @@
-.LayoutDefault {
+.layout-default {
     font-family: "Inter", sans-serif;
-    background-image: url("/assets/layouts/default/background.webp");
+    background-image: url("/assets/base/layout/background.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,7 +16,7 @@
         color: white;
     }
 
-    .LayoutDefault--content {
+    .layout-default-content {
         margin: 1rem;
     }
 }

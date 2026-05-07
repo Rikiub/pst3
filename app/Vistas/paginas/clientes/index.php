@@ -6,11 +6,11 @@
  */
 ?>
 
-<?php $this->layout('layouts/default', ['titulo' => 'Clientes']) ?>
+<?php $this->layout('layout', ['titulo' => 'Clientes']) ?>
 
 <?php $this->push('head') ?>
-    <link rel="stylesheet" href="/assets/rutas/clientes/styles.css">
-    <script type="module" src="/assets/rutas/clientes/script.js"></script>
+    <link rel="stylesheet" href="/assets/paginas/clientes/clientes.css">
+    <script type="module" src="/assets/paginas/clientes/clientes.js"></script>
 <?php $this->stop() ?>
 
 <dialog closedby="any" id="modal-edit">

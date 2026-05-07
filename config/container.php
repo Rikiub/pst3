@@ -5,6 +5,7 @@ use CuyZ\Valinor\Normalizer\Format;
 use CuyZ\Valinor\Normalizer\Normalizer;
 use CuyZ\Valinor\MapperBuilder;
 use CuyZ\Valinor\NormalizerBuilder;
+use League\Plates\Template\Theme;
 use League\Plates\Engine;
 
 return [
@@ -37,7 +38,10 @@ return [
     },
     // Directorio donde cargar vistas/plantillas
     Engine::class => function () {
-        return new Engine('app/Vistas');
+        return Engine::fromTheme(Theme::hierarchy([
+            Theme::new('app/Vistas/base', 'Base'),
+            Theme::new('app/Vistas/paginas', 'Pagina'),
+        ]));
     },
     // Validador
     TreeMapper::class => function () {

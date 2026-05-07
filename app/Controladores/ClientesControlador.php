@@ -19,7 +19,7 @@ class ClientesControlador extends BaseControlador
         $tipos = $this->modelo->getEstadosMembresia();
         $estados = $this->modelo->getTiposMembresia();
 
-        return $this->render('rutas/clientes', [
+        return $this->render('clientes/index', [
             'tipos' => $tipos,
             'estados' => $estados,
         ]);

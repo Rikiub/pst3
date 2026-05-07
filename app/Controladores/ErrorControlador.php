@@ -17,9 +17,6 @@ class ErrorControlador extends BaseControlador
             $mensaje = '405: Metodo no soportado';
         }
 
-        return $this->render(
-            'rutas/error',
-            ['mensaje' => $mensaje],
-        );
+        return $this->render('error/index', ['mensaje' => $mensaje]);
     }
 }
