@@ -12,9 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" href="/assets/favicon.png">
-    <link rel="stylesheet" href="/assets/base/index.css">
+    <meta name="color-scheme" content="light dark">
 
     <!-- Dependencias JavaScript -->
     <script type="importmap">
@@ -26,10 +24,17 @@
         }
     </script>
     <link rel="stylesheet" href="/assets/lib/gridjs/mermaid.min.css"> <!-- GridJS -->
+    <link rel="stylesheet" href="/assets/lib/picocss/pico.red.min.css"> <!-- PicoCSS -->
 
     <!-- TODO: Esto deberia guardarse como archivos en la carpeta "lib" -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&display=swap">
+
+    <!-- Importes globales -->
+    <link rel="icon" href="/assets/favicon.png">
+    <link rel="stylesheet" href="/assets/base/index.css">
+
+    <script type="module" src="/assets/js/dialog.js"></script>
 
     <?= $this->section('head') ?>
 

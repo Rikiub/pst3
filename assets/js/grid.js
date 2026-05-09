@@ -42,13 +42,13 @@ export function crudButtons(onModificar, onEliminar) {
     return {
         name: "Acciones",
         formatter: (cell, row) => {
-            return h("div", { className: "actions" }, [
+            return h("div", { className: "crud-actions" }, [
                 h("button", {
-                    className: "boton-edit",
+                    className: "button-edit",
                     onClick: () => onModificar(row.cells[0].data),
                 }, "Editar"),
                 h("button", {
-                    className: "boton-delete",
+                    className: "button-delete",
                     onClick: () => onEliminar(row.cells[0].data),
                 }, "Eliminar")
             ]);

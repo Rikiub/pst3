@@ -15,7 +15,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-id-card"></i> <span>Gestionar Clientes e Inscripciones</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="/clientes"><i class="fas fa-user-plus"></i> <span>Registro de clientes</span></a>
@@ -28,7 +27,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-chalkboard-user"></i> <span>Gestionar Trabajadores y Clases</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="trabajadores_registrar.php"><i class="fas fa-user-tie"></i> <span>Registro de trabajadores</span></a>
@@ -40,7 +38,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-coins"></i> <span>Gestionar Facturación y Control de Pagos</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="facturacion_automatica.php"><i class="fas fa-calculator"></i> <span>Automatización de vencimiento y recibos</span></a>
@@ -52,7 +49,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-fingerprint"></i> <span>Controlar Asistencia</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="asistencia_registrar.php"><i class="fas fa-edit"></i> <span>Registro entrada/salida</span></a>
@@ -63,7 +59,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-microchip"></i> <span>Gestionar Equipos y Maquinaria</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="equipos_mantenimiento.php"><i class="fas fa-tools"></i> <span>Registro de mantenimiento</span></a>
@@ -74,7 +69,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-boxes"></i> <span>Gestionar Productos</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="productos_stock.php"><i class="fas fa-boxes"></i> <span>Control de stock y demanda</span></a>
@@ -84,7 +78,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-dumbbell"></i> <span>Gestionar Rutinas de Entrenamiento</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="rutinas_disenar.php"><i class="fas fa-pen-ruler"></i> <span>Diseñar planes de entrenamiento</span></a>
@@ -95,7 +88,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-robot"></i> <span>Consultar Asistente de Entrenamiento</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="asistente_chat.php"><i class="fas fa-comments"></i> <span>Interfaz de chat con IA</span></a>
@@ -108,7 +100,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-shield-alt"></i> <span>Gestión de Auditoría y Seguridad</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="seguridad.php"><i class="fas fa-lock"></i> <span>Seguridad (Login/MD5/Captcha)</span></a>
@@ -120,7 +111,6 @@
 		<details class="nav-group">
 			<summary class="group-title">
 				<i class="fas fa-database"></i> <span>Gestión de Soporte y Datos</span>
-				<i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
 			</summary>
 			<div class="group-items">
 				<a href="reportes.php"><i class="fas fa-chart-bar"></i> <span>Reportes Estadísticos</span></a>

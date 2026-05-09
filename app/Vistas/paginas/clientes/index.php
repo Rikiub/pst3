@@ -14,107 +14,113 @@
 <?php $this->stop() ?>
 
 <div x-data="crud">
-    <dialog closedby="any" id="modal" x-ref="modal">
+    <dialog x-ref="modal" x-id="['form']">
         <article>
             <header>
-                <h2 x-show="method == 'POST'">Crear</h2>
-                <h2 x-show="method == 'PUT'">Modificar</h2>
-                <h2 x-show="method == 'DELETE'">Eliminar</h2>
-
                 <button
-                    aria-label="Close"
+                    aria-label="Cerrar"
                     rel="prev"
-                    command="close"
-                    commandfor="modal"
-                >&times;</button>
+                    @click="$refs.modal.close()"
+                ></button>
+
+                <h3 x-show="method == 'POST'">Crear</h3>
+                <h3 x-show="method == 'PUT'">Modificar</h3>
+                <h3 x-show="method == 'DELETE'">Eliminar</h3>
             </header>
 
-            <form x-ref="form" @submit.prevent="handleSubmit">
-                <div x-show="method !== 'DELETE'" class="content">
-                    <div class="grid">
-                        <label>Cédula
-                            <input required name="cedula" type="text" placeholder="29135792">
-                        </label>
+            <p x-show="method == 'DELETE'">
+                ¿Seguro que quieres eliminarlo?
+            </p>
 
-                        <label>Nombre
-                            <input required name="nombre" type="text" placeholder="Juan">
-                        </label>
+            <form
+                x-show="method !== 'DELETE'" x-ref="form"
+                @submit.prevent="handleSubmit"
+                :id="$id('form')"
+            >
+                <fieldset class="grid">
+                    <label>Cédula
+                        <input required name="cedula" type="text" placeholder="29135792">
+                    </label>
 
-                        <label>Apellido
-                            <input required name="apellido" type="text" placeholder="Pérez">
-                        </label>
-                    </div>
+                    <label>Nombre
+                        <input required name="nombre" type="text" placeholder="Juan">
+                    </label>
 
-                    <div class="grid">
-                        <label>Teléfono
-                            <input name="telefono" type="tel" placeholder="0414-526949">
-                        </label>
+                    <label>Apellido
+                        <input required name="apellido" type="text" placeholder="Pérez">
+                    </label>
+                </fieldset>
 
-                        <label>Correo
-                            <input name="correo" type="email" placeholder="correo@ejemplo.com">
-                        </label>
+                <fieldset class="grid">
+                    <label>Teléfono
+                        <input name="telefono" type="tel" placeholder="0414-526949">
+                    </label>
 
-                        <label>Dirección
-                            <input name="direccion" type="text" placeholder="Calle Principal #123">
-                        </label>
+                    <label>Correo
+                        <input name="correo" type="email" placeholder="correo@ejemplo.com">
+                    </label>
 
-                        <label>Fecha de Nacimiento
-                            <input name="fecha_nacimiento" type="date">
-                        </label>
-                    </div>
+                    <label>Dirección
+                        <input name="direccion" type="text" placeholder="Calle Principal #123">
+                    </label>
+                </fieldset>
 
-                    <div class="grid">
-                        <label>Tipo Membresia
-                            <select name="membresia[id_tipo]">
-                                <?php foreach ($estados as $item): ?>
-                                    <option value="<?= $item['id_tipo'] ?>">
-                                        <?= $item['nombre'] ?>
-                                    </option>
-                                <?php endforeach ?>
-                            </select>
-                        </label>
+                <fieldset>
+                    <label>Fecha de nacimiento
+                        <input name="fecha_nacimiento" type="date">
+                    </label>
+                </fieldset>
 
-                        <label>Estado Membresia
-                            <select name="membresia[id_estado]">
-                                <?php foreach ($tipos as $item): ?>
-                                    <option value="<?= $item['id_estado'] ?>">
-                                        <?= $item['nombre'] ?>
-                                    </option>
-                                <?php endforeach ?>
-                            </select>
-                        </label>
-                    </div>
+                <hr>
 
-                    <div class="grid">
-                        <label>Fecha Inicio Membresía
-                            <input name="membresia[fecha_inicio]" type="date">
-                        </label>
-                
-                        <label>Fecha Fin Membresía
-                            <input name="membresia[fecha_fin]" type="date">
-                        </label>
-                    </div>
-                </div>
+                <fieldset class="grid">
+                    <label>Tipo de membresia
+                        <select name="membresia[id_tipo]">
+                            <?php foreach ($estados as $item): ?>
+                                <option value="<?= $item['id_tipo'] ?>">
+                                    <?= $item['nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </label>
 
-                <footer>
-                    <div x-show="method !== 'DELETE'">
-                        <button type="submit">Enviar</button>
-                    </div>
+                    <label>Estado de membresia
+                        <select name="membresia[id_estado]">
+                            <?php foreach ($tipos as $item): ?>
+                                <option value="<?= $item['id_estado'] ?>">
+                                    <?= $item['nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </label>
+                </fieldset>
 
-                    <div x-show="method == 'DELETE'">
-                        <button type="button" command="close" commandfor="modal">No</button>
-                        <button type="submit">Si</button>
-                    </div>
-                </footer>
+                <fieldset class="grid">
+                    <label>Fecha de inicio de membresía
+                        <input name="membresia[fecha_inicio]" type="date">
+                    </label>
+            
+                    <label>Fecha de fin de membresía
+                        <input name="membresia[fecha_fin]" type="date">
+                    </label>
+                </fieldset>
             </form>
+
+            <footer>
+                <button x-show="method !== 'DELETE'" :form="$id('form')">Enviar</button>
+
+                <div x-show="method == 'DELETE'">
+                    <button class="secondary" @click="$refs.modal.close()">No</button>
+                    <button :form="$id('form')">Si</button>
+                </div>
+            </footer>
         </article>
     </dialog>
 
     <div>
-        <h1>Clientes</h1>
+        <h1 class="title">Clientes</h1>
 
         <button @click="onCreate">Crear</button>
-        <div class="table" x-ref="table"></div>
+        <div class="overflow-auto" x-ref="table"></div>
     </div>
 </div>
-
