@@ -7,6 +7,8 @@ use Exception;
 
 class Response
 {
+    public const CONTENT_JSON = 'application/json';
+
     public function __construct(
         public ?Normalizer $normalizer
     ) {}
@@ -63,14 +65,20 @@ class Response
         }
     }
 
-    public static function setJsonHeaders(int $status)
-    {
-        header('Content-Type: application/json');
-        http_response_code($status);
-    }
-
     public static function isJson(): bool
     {
-        return $_SERVER['CONTENT_TYPE'] ?? '' == 'application/json';
+        return $_SERVER['CONTENT_TYPE'] ?? '' == Response::CONTENT_JSON;
+    }
+
+    public static function acceptsJson(): bool
+    {
+        $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+        return str_contains($accept, Response::CONTENT_JSON);
+    }
+
+    public static function setJsonHeaders(int $status)
+    {
+        header('Content-Type: ' . Response::CONTENT_JSON);
+        http_response_code($status);
     }
 }

@@ -8,6 +8,13 @@ use DI\ContainerBuilder;
 const CONTAINER_FILE = 'config/container.php';
 const RUTAS_FILE = 'config/rutas.php';
 
+$response = new Response(null);
+
+// Configurar inyector de dependencias (PHP-DI)
+$builder = new ContainerBuilder();
+$builder->addDefinitions(CONTAINER_FILE)->useAttributes(true);
+$container = $builder->build();
+
 // Configurar rutas
 $dispatcher = FastRoute\simpleDispatcher(require RUTAS_FILE);
 
@@ -16,17 +23,13 @@ $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 $uri = rawurldecode(parse_url($uri, PHP_URL_PATH));
 
-// Configurar inyector de dependencias (PHP-DI)
-$builder = new ContainerBuilder();
-$builder->addDefinitions(CONTAINER_FILE)->useAttributes(true);
-$container = $builder->build();
+// Verificar ruta actual
+$isApi = strpos($uri, '/api') === 0;
 
-$response = new Response(null);
 $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
-
 switch ($rutaInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        if ($response->isJson()) {
+        if ($isApi) {
             echo $response->json([
                 'error' => 'Not Found',
                 'message' => "Route {$uri} not founded",
@@ -39,7 +42,7 @@ switch ($rutaInfo[0]) {
         break;
 
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        if ($response->isJson()) {
+        if ($isApi) {
             echo $response->json([
                 'error' => 'Not Allowed',
                 'message' => "Route {$uri} not allowed",

@@ -12,10 +12,12 @@ return function (RouteCollector $r) {
     $r->addRoute('GET', '/clientes', [ClientesControlador::class, 'index']);
 
     $r->addGroup('/api', function (RouteCollector $r) {
-        $r->addRoute('GET', '/clientes', [ClientesControlador::class, 'getClientes']);
-        $r->addRoute('GET', '/clientes/{cedula}', [ClientesControlador::class, 'findCliente']);
-        $r->addRoute('POST', '/clientes', [ClientesControlador::class, 'insertCliente']);
-        $r->addRoute(['POST', 'PUT'], '/clientes/{cedula}', [ClientesControlador::class, 'updateCliente']);
-        $r->addRoute('DELETE', '/clientes/{cedula}', [ClientesControlador::class, 'deleteCliente']);
+        $r->addGroup('/clientes', function (RouteCollector $r) {
+            $r->addRoute('GET', '', [ClientesControlador::class, 'getClientes']);
+            $r->addRoute('GET', '/{cedula}', [ClientesControlador::class, 'findCliente']);
+            $r->addRoute('POST', '', [ClientesControlador::class, 'insertCliente']);
+            $r->addRoute('PUT', '/{cedula}', [ClientesControlador::class, 'updateCliente']);
+            $r->addRoute('DELETE', '/{cedula}', [ClientesControlador::class, 'deleteCliente']);
+        });
     });
 };
