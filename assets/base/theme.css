@@ -22,7 +22,11 @@
     }
 
     button {
+        background-color: var(--pico-primary-background);
         width: 50px;
-        background-color: var(--pico-primary);
+
+        &:hover {
+            background-color: var(--pico-primary-hover-background);
+        }
     }
 }
