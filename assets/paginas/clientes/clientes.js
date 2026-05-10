@@ -97,8 +97,9 @@ document.addEventListener("alpine:init", () => {
             } else if (res.ok) {
                 return await res.json();
             } else {
-                console.log(await res.text());
-                throw new Error(res.status)
+                let json = await res.json();
+                console.log(json);
+                throw new Error(res.status);
             }
         },
     }));

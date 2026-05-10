@@ -48,27 +48,23 @@ class ClientesControlador extends BaseControlador
      */
     public function insertCliente(): string
     {
-        try {
-            $body = $this->getParsedBody();
-            $body['fecha_registro'] = new DateTimeImmutable();  // Asignar fecha actual
+        $body = $this->getParsedBody();
+        $body['fecha_registro'] = new DateTimeImmutable();  // Asignar fecha actual
 
-            // Valida el POST
-            $cliente = $this->mapper->map(Cliente::class, $body);
+        // Valida el POST
+        $cliente = $this->mapper->map(Cliente::class, $body);
 
-            // Verificar que el cliente no exista
-            $check = $this->modelo->findByCedula($cliente->cedula);
-            if ($check) {
-                return $this->jsonResponse(['error' => 'El cliente ya existe'], 400);
-            }
-
-            // Crea el cliente
-            $cliente = $this->modelo->insertCliente($cliente);
-
-            // Enviar JSON
-            return $this->jsonResponse($cliente, 201);
-        } catch (Throwable $e) {
-            return $this->jsonResponse(['error' => $e->getMessage()], 400);
+        // Verificar que el cliente no exista
+        $check = $this->modelo->findByCedula($cliente->cedula);
+        if ($check) {
+            return $this->jsonResponse(['message' => 'El cliente ya existe'], 400);
         }
+
+        // Crea el cliente
+        $cliente = $this->modelo->insertCliente($cliente);
+
+        // Enviar JSON
+        return $this->jsonResponse($cliente, 201);
     }
 
     /**
@@ -76,24 +72,20 @@ class ClientesControlador extends BaseControlador
      */
     public function updateCliente(array $vars): string
     {
-        try {
-            $cedula = $vars['cedula'];
+        $cedula = $vars['cedula'];
 
-            $body = $this->getParsedBody();
-            $body['cedula'] = $cedula;
+        $body = $this->getParsedBody();
+        $body['cedula'] = $cedula;
 
-            $cliente = $this->mapper->map(Cliente::class, $body);
+        $cliente = $this->mapper->map(Cliente::class, $body);
 
-            $check = $this->modelo->findByCedula($cedula);
-            if (!$check) {
-                return $this->jsonResponse(['error' => 'El cliente no existe'], 400);
-            }
-
-            $cliente = $this->modelo->updateCliente($cliente);
-            return $this->jsonResponse($cliente, 201);
-        } catch (Throwable $e) {
-            return $this->jsonResponse(['error' => $e->getMessage()], 400);
+        $check = $this->modelo->findByCedula($cedula);
+        if (!$check) {
+            return $this->jsonResponse(['message' => 'El cliente no existe'], 400);
         }
+
+        $cliente = $this->modelo->updateCliente($cliente);
+        return $this->jsonResponse($cliente, 201);
     }
 
     /**
@@ -105,7 +97,7 @@ class ClientesControlador extends BaseControlador
 
         $check = $this->modelo->findByCedula($cedula);
         if (!$check) {
-            return $this->jsonResponse(['error' => 'El cliente no existe'], 404);
+            return $this->jsonResponse(['message' => 'El cliente no existe'], 404);
         }
 
         $this->modelo->deleteByCedula($cedula);

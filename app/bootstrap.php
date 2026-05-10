@@ -1,5 +1,6 @@
 <?php
 
+use CuyZ\Valinor\Mapper\MappingError;
 use DI\ContainerBuilder;
 
 // Constantes
@@ -20,6 +21,7 @@ $builder->addDefinitions(CONTAINER_FILE)->useAttributes(true);
 $container = $builder->build();
 
 $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
+
 switch ($rutaInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // Si no se encuentra la ruta, redirigir a pagina de error.
@@ -39,7 +41,10 @@ switch ($rutaInfo[0]) {
 
         [$clase, $metodo] = $handler;
 
-        if (class_exists($clase)) {
+        try {
+            if (!class_exists($clase))
+                throw new Exception("Clase-controlador '$clase' no encontrado");
+
             // Obtener controlador e inyectar sus dependencias
             $controlador = $container->get($clase);
 
@@ -49,10 +54,36 @@ switch ($rutaInfo[0]) {
             // Mostrar respuesta como string
             // Si es HTML, el navegador lo renderizara.
             echo $respuesta;
-        } else {
-            http_response_code(500);
-            echo "Clase-controlador '$clase' no encontrado";
+        } catch (MappingError $error) {
+            $messages = $error->messages();
+            $errors = [];
+
+            foreach ($messages as $m) {
+                array_push($errors, [
+                    'name' => $m->name(),
+                    'source' => $m->sourceValue(),
+                    'expected' => $m->expectedSignature(),
+                ]);
+            }
+
+            echo jsonResponse([
+                'error' => 'Validation Error',
+                'message' => 'The request contains invalid data',
+                'errors' => $errors
+            ], 400);
+        } catch (Throwable $error) {
+            echo jsonResponse([
+                'error' => 'Internal Server Error',
+                'message' => $error->getMessage()
+            ], 500);
         }
 
         break;
+}
+
+function jsonResponse(mixed $data, int $code = 200): string
+{
+    header('Content-Type: application/json');
+    http_response_code($code);
+    return json_encode($data);
 }
