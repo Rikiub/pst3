@@ -65,9 +65,11 @@ document.addEventListener("alpine:init", () => {
             this.id = id;
 
             const data = await this.fetchApi(`/${this.id}`);
-            data.fecha_nacimiento = data.fecha_nacimiento?.split("T")[0];
-            data.membresia.fecha_inicio = data.membresia.fecha_inicio?.split("T")[0];
-            data.membresia.fecha_fin = data.membresia.fecha_fin?.split("T")[0];
+
+            const onlyDate = (value) => value?.split('T')[0];
+            data.fecha_nacimiento = onlyDate(data.fecha_nacimiento);
+            data.membresia.fecha_inicio = onlyDate(data.membresia.fecha_inicio);
+            data.membresia.fecha_fin = onlyDate(data.membresia.fecha_fin);
 
             FormDataJson.fromJson(this.$refs.form, data, { clearOthers: true });
             this.$refs.modal.showModal();
