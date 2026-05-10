@@ -178,9 +178,8 @@ LOCK TABLES `cliente` WRITE;
 INSERT INTO `cliente` VALUES
 ('V-11111111',0),
 ('V-22222222',0),
-('32632',17),
-('323532',18),
-('52523',19);
+('2515',26),
+('34634',27);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -435,7 +434,7 @@ CREATE TABLE `membresia` (
   KEY `membresia_estado_membresia_FK` (`id_estado`),
   CONSTRAINT `fk_membresia_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_membresia` (`id_tipo`) ON UPDATE CASCADE,
   CONSTRAINT `membresia_estado_membresia_FK` FOREIGN KEY (`id_estado`) REFERENCES `estado_membresia` (`id_estado`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Deberia tener:\n- Activo\n- Vencido\n- Moroso';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Deberia tener:\n- Activo\n- Vencido\n- Moroso';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -446,14 +445,24 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `membresia` WRITE;
 /*!40000 ALTER TABLE `membresia` DISABLE KEYS */;
 INSERT INTO `membresia` VALUES
-(0,1,1,'2026-04-06','2026-04-07'),
+(0,3,1,'2026-05-11','2026-05-28'),
 (13,1,1,NULL,NULL),
 (14,1,1,NULL,NULL),
 (15,1,1,'2026-05-21','2026-05-27'),
 (16,1,1,'2026-05-20','2026-05-31'),
 (17,1,1,'2026-05-18','2026-05-30'),
 (18,1,1,'2026-05-14','2026-05-27'),
-(19,1,1,'2026-05-11','2026-05-30');
+(19,1,1,'2026-05-11','2026-05-30'),
+(20,1,1,'2026-05-11','2026-05-31'),
+(21,1,1,'2026-05-06','2026-05-29'),
+(22,1,1,'2026-05-19','2026-05-31'),
+(23,1,1,'2026-05-11','2026-05-30'),
+(24,1,1,'2026-05-19','2026-05-21'),
+(25,1,1,'2026-05-19','2026-05-29'),
+(26,1,1,'2026-05-18','2026-05-30'),
+(27,1,1,'2026-05-18','2026-05-31'),
+(28,2,1,'2026-05-11','2026-05-31'),
+(29,1,1,NULL,NULL);
 /*!40000 ALTER TABLE `membresia` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -547,11 +556,11 @@ CREATE TABLE `persona` (
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
   `correo` varchar(100) DEFAULT NULL,
-  `telefono` int(20) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
   `direccion` text DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_registro` datetime DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 0,
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`cedula_persona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -564,13 +573,23 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 INSERT INTO `persona` VALUES
-('323532','asfas','asg','hola@gmail.com',363,'asaa','2026-05-06','2026-05-03 00:00:00',1),
-('32632','aasga','sga','hola@gmail.com',23623,'asfas','2026-05-11','2026-05-03 19:38:57',1),
-('52523','afs','asfa','hola@gmail.com',3252363,'asfas','2026-05-07','2026-05-03 00:00:00',1),
+('236236','XDDD','sasa','hola@gmail.com','3623','asas','2026-05-27',NULL,1),
+('2366','Juanita','Gonzalez',NULL,NULL,NULL,NULL,'2026-05-10 15:49:36',1),
+('2515','Manuel','Sanchez','hola@gmail.com','23623','asfa',NULL,'2026-05-10 04:19:29',1),
+('2525','XDDDD','gasg',NULL,'232363',NULL,NULL,'2026-05-10 15:58:57',1),
+('3223623636','MAMA','gssa','hola@gmail.com','326236','asfas','2026-05-14',NULL,1),
+('323532','Maria Antonieta','asg','hola@gmail.com','363','asaa','2026-05-06',NULL,1),
+('32632','aasga','sga','hola@gmail.com','23623','asfas','2026-05-11','2026-05-03 19:38:57',1),
+('34634','Sergio','Ramos','hola@gmail.com','412442853',NULL,NULL,'2026-05-10 15:50:47',1),
+('52523','So','asfa','hola@gmail.com','3252363','asfas','2026-05-07',NULL,1),
+('56865','sgsd','sga','hola@gmail.com','326236','asfa','2026-05-12',NULL,1),
+('745734','asfasf','gerehr','hola@gmail.com','347347','asfas','2026-05-06',NULL,1),
+('8195258','Pablito','Fernandez','hola@gmail.com','412414814','asfasf','2026-05-07',NULL,1),
+('99999999','asfas','safasf','hola@gmail.com','32236','Portugal','2026-05-06',NULL,1),
 ('T-00000001','sag','AFa',NULL,NULL,NULL,NULL,'2026-04-26 16:46:02',0),
 ('T-00000002','asga','asgas','',NULL,NULL,NULL,'2026-04-26 16:46:02',0),
-('V-11111111','AD','F','hola@gmail.com',412532584,NULL,NULL,'2026-04-26 16:45:34',1),
-('V-22222222','A','D',NULL,NULL,NULL,NULL,'2026-04-26 16:45:34',0);
+('V-11111111','Maria','Torres','hola@gmail.com','412532584',NULL,'2026-05-14','2026-05-10 02:45:09',1),
+('V-22222222','Enrique','Alejandro','enrique@gmail.com','2362362','Calle 13','2026-05-07',NULL,1);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -1202,4 +1221,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-05-03 17:32:19
+-- Dump completed on 2026-05-10 12:01:45

@@ -38,10 +38,10 @@ document.addEventListener("alpine:init", () => {
 
         async handleSubmit() {
             let body = null;
-            let url = "";
+            let url = `/${this.endpoint}`;
 
             if (this.method == "PUT" || this.method == "DELETE") {
-                url = `/${this.endpoint}/${this.id}`;
+                url = `${url}/${this.id}`;
             }
             if (this.method == "PUT" || this.method == "POST") {
                 body = FormDataJson.toJson(this.$refs.form, { skipEmpty: true });

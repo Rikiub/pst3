@@ -27,7 +27,7 @@ readonly class Cliente
         public ?string $nombre = null,
         public ?string $apellido = null,
         public ?string $correo = null,
-        public ?int $telefono = null,
+        public ?string $telefono = null,
         public ?string $direccion = null,
         public ?bool $activo = true,
         public ?DateTimeImmutable $fecha_nacimiento = null,
