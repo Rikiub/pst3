@@ -1,6 +1,6 @@
 import { Grid, PluginPosition, h } from "gridjs";
 
-/** Crear y obtener una instancia Grid */
+/** Crea una tabla de datos adaptada para CRUDs */
 export function createGrid(config) {
     config.columns?.push(crudButtons(config.onEdit, config.onDelete));
 

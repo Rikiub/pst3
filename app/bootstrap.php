@@ -24,15 +24,31 @@ $rutaInfo = $dispatcher->dispatch($httpMethod, $uri);
 
 switch ($rutaInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        // Si no se encuentra la ruta, redirigir a pagina de error.
-        http_response_code(404);
-        header('Location: /error?code=404');
+        if (isJson()) {
+            echo jsonResponse([
+                'error' => 'Not Found',
+                'message' => "Route {$uri} not founded",
+                'uri' => $uri,
+            ], 404);
+        } else {
+            // Si no se encuentra la ruta, redirigir a pagina de error.
+            http_response_code(404);
+            header('Location: /error?code=404');
+        }
         break;
 
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        // Si el metodo no se permite, redirigir a pagina de error.
-        http_response_code(405);
-        header('Location: /error?code=405');
+        if (isJson()) {
+            echo jsonResponse([
+                'error' => 'Not Allowed',
+                'message' => "Route {$uri} not allowed",
+                'uri' => $uri,
+            ], 404);
+        } else {
+            // Si el metodo no se permite, redirigir a pagina de error.
+            http_response_code(405);
+            header('Location: /error?code=405');
+        }
         break;
 
     case FastRoute\Dispatcher::FOUND:
@@ -86,4 +102,9 @@ function jsonResponse(mixed $data, int $code = 200): string
     header('Content-Type: application/json');
     http_response_code($code);
     return json_encode($data);
+}
+
+function isJson(): bool
+{
+    return $_SERVER['CONTENT_TYPE'] == 'application/json';
 }

@@ -1,10 +1,11 @@
 import { createGrid } from "/assets/js/grid.js";
+import { API_PREFIX, fetchApi } from "/assets/js/api.js";
 import FormDataJson from "form-data-json";
 import Alpine from "alpinejs";
 
 document.addEventListener("alpine:init", () => {
     Alpine.data("crud", () => ({
-        endpoint: "/api/clientes",
+        endpoint: "clientes",
         method: "PUT",
         id: "",
 
@@ -18,7 +19,7 @@ document.addEventListener("alpine:init", () => {
                     "Telefono",
                 ],
                 server: {
-                    url: this.endpoint,
+                    url: `${API_PREFIX}/${this.endpoint}`,
                     then: data => data.map(item => [
                         item.cedula,
                         item.nombre,
@@ -40,15 +41,13 @@ document.addEventListener("alpine:init", () => {
             let url = "";
 
             if (this.method == "PUT" || this.method == "DELETE") {
-                url = `/${this.id}`;
+                url = `/${this.endpoint}/${this.id}`;
             }
             if (this.method == "PUT" || this.method == "POST") {
-                body = JSON.stringify(
-                    FormDataJson.toJson(this.$refs.form, { skipEmpty: true })
-                );
+                body = FormDataJson.toJson(this.$refs.form, { skipEmpty: true });
             }
 
-            await this.fetchApi(url, { method: this.method, body: body });
+            await fetchApi(url, { method: this.method, body: body });
 
             this.$refs.modal.close();
             this.grid.forceRender();
@@ -60,11 +59,10 @@ document.addEventListener("alpine:init", () => {
             this.$refs.modal.showModal();
         },
         async onEdit(id) {
-            this.$refs.form.reset();
             this.method = "PUT";
             this.id = id;
 
-            const data = await this.fetchApi(`/${this.id}`);
+            const data = await fetchApi(`/${this.endpoint}/${this.id}`);
 
             const onlyDate = (value) => value?.split('T')[0];
             data.fecha_nacimiento = onlyDate(data.fecha_nacimiento);
@@ -78,27 +76,6 @@ document.addEventListener("alpine:init", () => {
             this.method = "DELETE";
             this.id = id;
             this.$refs.modal.showModal();
-        },
-
-        /** 
-         * @param string params,
-         * @param {RequestInit} options
-         */
-        async fetchApi(params = "", options = {}) {
-            const res = await fetch(`${this.endpoint}${params}`, {
-                headers: { "Content-Type": "application/json" },
-                ...options
-            });
-
-            if (res.status === 204) {
-                return {}
-            } else if (res.ok) {
-                return await res.json();
-            } else {
-                let json = await res.json();
-                console.log(json);
-                throw new Error(res.status);
-            }
         },
     }));
 });
