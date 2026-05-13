@@ -27,6 +27,8 @@
     </script>
 
     <?php
+    $this->pushJs('/assets/lib/alpinejs/mask.min.js');
+
     $this->pushCss('/assets/lib/gridjs/mermaid.min.css');  // GridJS
     $this->pushCss('/assets/lib/picocss/pico.red.min.css');  // PicoCSS
     $this->pushCss('/assets/lib/picocss/pico.colors.min.css');  // PicoCSS Colors
