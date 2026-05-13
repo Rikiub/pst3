@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modelos;
+namespace App\Modelos\Clientes;
 
 use App\Core\BaseModelo;
 use App\Core\Validador;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
-readonly class SeguimientoFisico
+readonly class SeguimientoFisicoDTO
 {
     public function __construct(
         public ?int $id_seguimiento = null,
@@ -65,14 +65,14 @@ class SeguimientoFisicoModelo extends BaseModelo
         return 'SELECT * FROM seguimiento_fisico';
     }
 
-    private function mapSeguimiento(array $row): SeguimientoFisico
+    private function mapSeguimiento(array $row): SeguimientoFisicoDTO
     {
-        return $this->mapper->map(SeguimientoFisico::class, $row);
+        return $this->mapper->map(SeguimientoFisicoDTO::class, $row);
     }
 
     /**
      * Obtiene todos los seguimientos de un cliente.
-     * @return array<SeguimientoFisico>
+     * @return array<SeguimientoFisicoDTO>
      */
     public function getByCliente(string $cedula): array
     {
@@ -88,7 +88,7 @@ class SeguimientoFisicoModelo extends BaseModelo
     /**
      * Busca un seguimiento por su ID.
      */
-    public function findById(int $id): SeguimientoFisico|false
+    public function findById(int $id): SeguimientoFisicoDTO|false
     {
         $stmt = $this->pdo->prepare(
             $this->sqlSelect() . ' WHERE id_seguimiento = ?'
@@ -106,7 +106,7 @@ class SeguimientoFisicoModelo extends BaseModelo
     /**
      * Inserta un nuevo seguimiento.
      */
-    public function insert(SeguimientoFisico $seguimiento): SeguimientoFisico
+    public function insert(SeguimientoFisicoDTO $seguimiento): SeguimientoFisicoDTO
     {
         $seguimiento->validarInsert();
 
@@ -130,7 +130,7 @@ class SeguimientoFisicoModelo extends BaseModelo
     /**
      * Actualiza un seguimiento existente.
      */
-    public function update(SeguimientoFisico $seguimiento): SeguimientoFisico
+    public function update(SeguimientoFisicoDTO $seguimiento): SeguimientoFisicoDTO
     {
         if (!$seguimiento->id_seguimiento) {
             throw new InvalidArgumentException('Se requiere id_seguimiento para actualizar');

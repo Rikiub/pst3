@@ -2,7 +2,7 @@
 
 /**
  * @var array $formMeta
- * @var App\Modelos\Cliente $cliente
+ * @var App\Modelos\Clientes\ClienteDTO $cliente
  */
 $this->layout('layout');
 $this->pushJs('/assets/paginas/clientes/clientes.js');

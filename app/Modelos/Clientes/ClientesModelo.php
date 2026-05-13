@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modelos;
+namespace App\Modelos\Clientes;
 
 use App\Core\BaseModelo;
 use App\Core\Validador;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
-readonly class Membresia
+readonly class MembresiaDTO
 {
     public function __construct(
         public ?int $id_membresia = null,
@@ -20,7 +20,7 @@ readonly class Membresia
     ) {}
 }
 
-readonly class Cliente
+readonly class ClienteDTO
 {
     public function __construct(
         public ?string $cedula = null,
@@ -32,7 +32,7 @@ readonly class Cliente
         public ?bool $activo = true,
         public ?DateTimeImmutable $fecha_nacimiento = null,
         public ?DateTimeImmutable $fecha_registro = new DateTimeImmutable(),
-        public ?Membresia $membresia = null,
+        public ?MembresiaDTO $membresia = null,
     ) {}
 
     public function validarInsert()
@@ -81,14 +81,14 @@ class ClientesModelo extends BaseModelo
             SQL;
     }
 
-    private function mapToCliente(array $row): Cliente
+    private function mapToCliente(array $row): ClienteDTO
     {
         $row['membresia'] = json_decode($row['membresia'], true);
-        return $this->mapper->map(Cliente::class, $row);
+        return $this->mapper->map(ClienteDTO::class, $row);
     }
 
     /**
-     * @return array<Cliente>
+     * @return array<ClienteDTO>
      */
     public function getAll()
     {
@@ -104,7 +104,7 @@ class ClientesModelo extends BaseModelo
         return $data;
     }
 
-    public function findByCedula(string $cedula): Cliente|false
+    public function findByCedula(string $cedula): ClienteDTO|false
     {
         // Cliente
         $stmt = $this->pdo->prepare(
@@ -140,7 +140,7 @@ class ClientesModelo extends BaseModelo
         return $rows;
     }
 
-    public function insertCliente(Cliente $cliente): Cliente
+    public function insertCliente(ClienteDTO $cliente): ClienteDTO
     {
         $cliente->validarInsert();
         $this->pdo->beginTransaction();
@@ -175,7 +175,7 @@ class ClientesModelo extends BaseModelo
         return $this->findByCedula($cliente->cedula);
     }
 
-    public function updateCliente(Cliente $cliente): Cliente
+    public function updateCliente(ClienteDTO $cliente): ClienteDTO
     {
         $cliente->validarInsert();
         $this->pdo->beginTransaction();

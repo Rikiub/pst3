@@ -1,6 +1,6 @@
 <?php
 
-use App\Controladores\ClientesControlador;
+use App\Controladores\Clientes\ClientesControlador;
 use App\Controladores\ErrorControlador;
 use App\Controladores\InicioControlador;
 use FastRoute\RouteCollector;

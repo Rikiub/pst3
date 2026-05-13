@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controladores;
+namespace App\Controladores\Clientes;
 
 use App\Core\BaseControlador;
-use App\Modelos\Cliente;
-use App\Modelos\ClientesModelo;
+use App\Modelos\Clientes\ClienteDTO;
+use App\Modelos\Clientes\ClientesModelo;
 
 class ClientesControlador extends BaseControlador
 {
@@ -67,7 +67,7 @@ class ClientesControlador extends BaseControlador
         $body = $this->response->getParsedBody();
 
         // Valida el POST
-        $cliente = $this->mapper->map(Cliente::class, $body);
+        $cliente = $this->mapper->map(ClienteDTO::class, $body);
 
         // Verificar que el cliente no exista
         if ($this->modelo->findByCedula($cliente->cedula)) {
@@ -91,7 +91,7 @@ class ClientesControlador extends BaseControlador
         $body = $this->response->getParsedBody();
         $body['cedula'] = $cedula;
 
-        $cliente = $this->mapper->map(Cliente::class, $body);
+        $cliente = $this->mapper->map(ClienteDTO::class, $body);
 
         if (!$this->modelo->findByCedula($cedula)) {
             return $this->response->json(['message' => 'El cliente no existe'], 400);
