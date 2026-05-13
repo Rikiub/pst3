@@ -41,6 +41,7 @@ return [
     Engine::class => function () {
         return Engine::fromTheme(Theme::hierarchy([
             Theme::new('app/Vistas/base', 'Base'),
+            Theme::new('app/Vistas/componentes', 'Componentes'),
             Theme::new('app/Vistas/paginas', 'Pagina'),
         ]))
             ->loadExtension(new AssetExtension());

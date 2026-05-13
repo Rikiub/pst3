@@ -39,7 +39,7 @@
 
     // Importes globales
     $this->pushCss('/assets/base/index.css');
-    $this->pushJs('/assets/js/dialog.js');
+    $this->pushJs('/assets/base/index.js');
     ?>
 
     <?= $this->renderCss() ?>

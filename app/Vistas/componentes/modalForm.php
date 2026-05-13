@@ -1,18 +1,23 @@
 <?php
 $formHtml = $formHtml ?? '';
 
-$options = $options ?? [];
-$options = htmlspecialchars(json_encode($options), ENT_QUOTES, 'UTF-8');
-$alpineComponent = $alpineComponent ?? "modalForm($options)";
+if (!isset($alpineComponent)) {
+    $options = $options ?? '';
+    $options = json_encode($options);
+    $alpineComponent = htmlspecialchars("modalForm($options)", ENT_QUOTES);
+} else {
+    $alpineComponent = $alpineComponent;
+}
 
-$this->pushJs('/assets/base/parciales/modalForm/modalForm.js');
+$this->pushJs('/assets/componentes/modalForm/modalForm.js');
 ?>
 
 <dialog
     x-data="<?= $alpineComponent ?>"
     x-ref="modal"
     x-id="['form']"
-    @open-modal.window="$event.detail"
+    :closedby="loading ? 'none' : 'any'"
+    @open-modal.window="handleEvent($event.detail)"
 >
     <article>
         <header>
@@ -22,17 +27,17 @@ $this->pushJs('/assets/base/parciales/modalForm/modalForm.js');
                 @click="$refs.modal.close()"
             ></button>
 
-            <h3 x-show="method == 'POST'">Crear</h3>
-            <h3 x-show="method == 'PUT'">Editar</h3>
-            <h3 x-show="method == 'DELETE'">Eliminar</h3>
+            <h3 x-show="mode == 'add'">Crear</h3>
+            <h3 x-show="mode == 'edit'">Editar</h3>
+            <h3 x-show="mode == 'delete'">Eliminar</h3>
         </header>
 
-        <p x-show="method == 'DELETE'">
+        <p x-show="mode == 'delete'">
             ¿Seguro que quieres eliminarlo?
         </p>
 
         <form
-            x-show="method !== 'DELETE'" x-ref="form"
+            x-show="mode !== 'delete'" x-ref="form"
             @submit.prevent="handleSubmit"
             :id="$id('form')"
             novalidate
@@ -42,16 +47,15 @@ $this->pushJs('/assets/base/parciales/modalForm/modalForm.js');
 
         <footer>
             <button
-                x-show="method !== 'DELETE'"
+                x-show="mode !== 'delete'"
                 :form="$id('form')"
                 :aria-busy="loading"
                 :disabled="loading"
             >Enviar</button>
 
-            <div x-show="method == 'DELETE'">
+            <div x-show="mode == 'delete'">
                 <button class="secondary" @click="$refs.modal.close()">No</button>
                 <button
-                    x-ref="button_delete"
                     :form="$id('form')"
                     :aria-busy="loading" 
                     :disabled="loading"

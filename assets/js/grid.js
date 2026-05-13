@@ -1,8 +1,10 @@
 import { Grid, PluginPosition, h } from "gridjs";
 
 /** Crea una tabla de datos adaptada para CRUDs */
-export function createGrid(config) {
-    config.columns?.push(crudButtons(config.onEdit, config.onDelete));
+export function createGrid(options) {
+    if (options.crud) {
+        options.columns?.push(crudButtons(options.crud.onEdit, options.crud.onDelete));
+    }
 
     const grid = new Grid({
         language: {
@@ -33,13 +35,17 @@ export function createGrid(config) {
             limit: 20,
             summary: true,
         },
-        ...config
+        ...options
     });
-    grid.plugin.add({
-        id: "add",
-        component: () => addButton(config.onAdd),
-        position: PluginPosition.Header,
-    })
+
+    if (options.crud?.onAdd) {
+        grid.plugin.add({
+            id: "add",
+            component: () => addButton(options.crud.onAdd),
+            position: PluginPosition.Header,
+        })
+    }
+
     return grid;
 }
 

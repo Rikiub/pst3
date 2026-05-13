@@ -4,7 +4,7 @@ $this->pushCss('/assets/base/layout/layout.css');
 ?>
 
 <div class="layout-default">
-    <?= $this->insert('parciales/sidebar') ?>
+    <?= $this->insert('sidebar') ?>
 
     <div class="layout-default-content">
         <?= $this->section('content') ?>

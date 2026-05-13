@@ -1,4 +1,4 @@
-import { fetchApi } from "../../../js/api.js";
+import { fetchApi } from "/assets/js/api.js";
 import FormDataJson from "form-data-json";
 import Alpine from "alpinejs";
 
@@ -7,30 +7,34 @@ import Alpine from "alpinejs";
      * transformEditData: (data: object) => object,
  * }} options
  */
-export function modalFormComponent(options) {
-    let transformEditData = options.transformEditData;
-    if (!transformEditData) {
-        transformEditData = (data) => data;
-    };
+export function modalFormComponent(options = { transformEditData: (data) => data }) {
+    const { endpoint, transformEditData } = options;
 
     return {
         endpoint: options.endpoint,
         transformEditData: transformEditData,
-        method: "POST",
+        mode: "add",
         id: "",
 
         loading: false,
         errors: {},
 
         handleEvent(detail) {
-            if (detail.method === "POST") {
+            if (!detail.mode) console.error("A 'mode' must be provided");
+
+            if (detail.mode === "add") {
                 this.onAdd();
-            } else if (detail.method === "PUT") {
+                return;
+            }
+
+            if (!detail.id) console.error("A 'id' must be provided");
+
+            if (detail.mode === "edit") {
                 this.onEdit(detail.id);
-            } else if (detail.method === "DELETE") {
+            } else if (detail.mode === "delete") {
                 this.onDelete(detail.id);
             } else {
-                console.log("A 'method' must be provided");
+                console.error("'mode' must be one of: 'add', 'edit', 'delete'");
             }
         },
 
@@ -50,37 +54,43 @@ export function modalFormComponent(options) {
                 }
             }
 
-            if (this.method === "DELETE" || valid) {
+            if (this.mode === "delete" || valid) {
                 let body = null;
                 let url = `/${this.endpoint}`;
                 this.loading = true;
 
-                if (this.method == "PUT" || this.method == "DELETE") {
+                if (this.mode == "edit" || this.mode == "delete") {
                     url = `${url}/${this.id}`;
                 }
-                if (this.method == "PUT" || this.method == "POST") {
+                if (this.mode == "edit" || this.mode == "add") {
                     body = FormDataJson.toJson(this.$refs.form, { skipEmpty: true });
                 }
 
-                await fetchApi(url, { method: this.method, body: body });
+                const method = {
+                    "add": "POST",
+                    "edit": "PUT",
+                    "delete": "DELETE",
+                }[this.mode];
+
+                await fetchApi(url, { method, body: body });
 
                 this.loading = false;
                 this.$refs.modal.close();
                 this.$dispatch("form-success");
             } else {
-                console.log("Invalid input, POST canceled");
+                console.log("Invalid input, form submit canceled");
             }
         },
 
         async onAdd() {
             this.clearForm();
-            this.method = "POST";
+            this.mode = "add";
             this.$refs.modal.showModal();
         },
         async onEdit(id) {
             this.clearForm();
 
-            this.method = "PUT";
+            this.mode = "edit";
             this.id = id;
 
             let data = await fetchApi(`/${this.endpoint}/${this.id}`);
@@ -90,7 +100,7 @@ export function modalFormComponent(options) {
             this.$refs.modal.showModal();
         },
         async onDelete(id) {
-            this.method = "DELETE";
+            this.mode = "delete";
             this.id = id;
             this.$refs.modal.showModal();
         },

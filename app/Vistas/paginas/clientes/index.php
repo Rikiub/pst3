@@ -29,11 +29,11 @@ $this->pushCss('/assets/paginas/clientes/clientes.css');
 
 <h1 class="title">Clientes</h1>
 
-<div x-data="crudClientes">
-    <?= $this->insert('parciales/crudTable') ?>
+<div>
+    <?= $this->insert('crudTable', ['alpineComponent' => 'crudTable']) ?>
     
-    <?= $this->insert('parciales/modalForm', [
-        'alpineComponent' => 'customForm',
+    <?= $this->insert('modalForm', [
+        'alpineComponent' => 'modalForm',
         'formHtml' => <<<HTML
                 <div>
                     <fieldset class="grid">
