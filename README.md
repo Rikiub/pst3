@@ -2,5 +2,4 @@
 
 ## Instrucciones XAMPP
 
-Colocar el proyecto entero en la raiz de `htdocs`, de lo contrario se romperan las rutas.
-Tambien pueden buscar como configurar XAMPP para que detecte una subcarpeta como una nueva raiz.
+Colocar la carpeta `sofit-gym` dentro de `htdocs/`. Luego ingresar a traves de `http://localhost/sofit-gym`.
