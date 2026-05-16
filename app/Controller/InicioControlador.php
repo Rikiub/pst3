@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controladores;
+namespace App\Controller;
 
 use App\Core\BaseControlador;
 

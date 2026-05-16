@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controladores\Clientes;
+namespace App\Controller\Clientes;
 
 use App\Core\BaseControlador;
-use App\Modelos\Clientes\ClienteDTO;
-use App\Modelos\Clientes\ClientesModelo;
+use App\Model\Clientes\ClienteDTO;
+use App\Model\Clientes\ClientesModelo;
 
 class ClientesControlador extends BaseControlador
 {

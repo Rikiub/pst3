@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace App\Helpers;
 
 use CuyZ\Valinor\Normalizer\Normalizer;
 use Exception;

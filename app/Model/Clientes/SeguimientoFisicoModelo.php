@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modelos\Clientes;
+namespace App\Model\Clientes;
 
 use App\Core\BaseModelo;
-use App\Core\Validador;
+use App\Helpers\Validator;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
@@ -112,7 +112,7 @@ class SeguimientoFisicoModelo extends BaseModelo
 
         $this->pdoInsert('seguimiento_fisico', [
             'cedula_cliente' => $seguimiento->cedula_cliente,
-            'fecha' => Validador::dateToString($seguimiento->fecha),
+            'fecha' => Validator::dateToString($seguimiento->fecha),
             'altura_cm' => $seguimiento->altura_cm,
             'peso_kg' => $seguimiento->peso_kg,
             'cintura_cm' => $seguimiento->cintura_cm,
@@ -140,7 +140,7 @@ class SeguimientoFisicoModelo extends BaseModelo
 
         $this->pdoUpdate('seguimiento_fisico', [
             'cedula_cliente' => $seguimiento->cedula_cliente,
-            'fecha' => Validador::dateToString($seguimiento->fecha),
+            'fecha' => Validator::dateToString($seguimiento->fecha),
             'altura_cm' => $seguimiento->altura_cm,
             'peso_kg' => $seguimiento->peso_kg,
             'cintura_cm' => $seguimiento->cintura_cm,

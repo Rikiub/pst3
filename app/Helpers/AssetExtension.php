@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace App\Helpers;
 
 use League\Plates\Extension\ExtensionInterface;
 use League\Plates\Engine;

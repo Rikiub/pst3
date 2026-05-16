@@ -1,9 +1,9 @@
 <?php
 
-use App\Controladores\Clientes\ClientesControlador;
-use App\Controladores\Clientes\SeguimientoFisicoControlador;
-use App\Controladores\ErrorControlador;
-use App\Controladores\InicioControlador;
+use App\Controller\Clientes\ClientesControlador;
+use App\Controller\Clientes\SeguimientoFisicoControlador;
+use App\Controller\ErrorControlador;
+use App\Controller\InicioControlador;
 use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {

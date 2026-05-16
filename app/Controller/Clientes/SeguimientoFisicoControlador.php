@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controladores\Clientes;
+namespace App\Controller\Clientes;
 
 use App\Core\BaseControlador;
-use App\Modelos\Clientes\ClientesModelo;
-use App\Modelos\Clientes\SeguimientoFisicoDTO;
-use App\Modelos\Clientes\SeguimientoFisicoModelo;
+use App\Model\Clientes\ClientesModelo;
+use App\Model\Clientes\SeguimientoFisicoDTO;
+use App\Model\Clientes\SeguimientoFisicoModelo;
 
 class SeguimientoFisicoControlador extends BaseControlador
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Core;
+namespace App\Helpers;
 
 use DateTimeInterface;
 
-class Validador
+class Validator
 {
     public static function dateToString(?DateTimeInterface $date): ?string
     {

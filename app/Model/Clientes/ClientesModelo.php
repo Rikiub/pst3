@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modelos\Clientes;
+namespace App\Model\Clientes;
 
 use App\Core\BaseModelo;
-use App\Core\Validador;
+use App\Helpers\Validator;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
@@ -152,8 +152,8 @@ class ClientesModelo extends BaseModelo
             'correo' => $cliente->correo,
             'telefono' => $cliente->telefono,
             'direccion' => $cliente->direccion,
-            'fecha_nacimiento' => Validador::dateToString($cliente->fecha_nacimiento),
-            'fecha_registro' => Validador::dateToString($cliente->fecha_registro),
+            'fecha_nacimiento' => Validator::dateToString($cliente->fecha_nacimiento),
+            'fecha_registro' => Validator::dateToString($cliente->fecha_registro),
             'activo' => $cliente->activo,
         ]);
 
@@ -161,8 +161,8 @@ class ClientesModelo extends BaseModelo
         $this->pdoInsert('membresia', [
             'id_tipo' => $membresia->id_tipo,
             'id_estado' => $membresia->id_estado,
-            'fecha_inicio' => Validador::dateToString($membresia->fecha_inicio),
-            'fecha_fin' => Validador::dateToString($membresia->fecha_fin),
+            'fecha_inicio' => Validator::dateToString($membresia->fecha_inicio),
+            'fecha_fin' => Validator::dateToString($membresia->fecha_fin),
         ]);
         $membresiaId = $this->pdo->lastInsertId();
 
@@ -187,8 +187,8 @@ class ClientesModelo extends BaseModelo
                 'correo' => $cliente->correo,
                 'telefono' => $cliente->telefono,
                 'direccion' => $cliente->direccion,
-                'fecha_nacimiento' => Validador::dateToString($cliente->fecha_nacimiento),
-                'fecha_registro' => Validador::dateToString($cliente->fecha_registro),
+                'fecha_nacimiento' => Validator::dateToString($cliente->fecha_nacimiento),
+                'fecha_registro' => Validator::dateToString($cliente->fecha_registro),
                 'activo' => $cliente->activo,
             ],
             ['cedula_persona' => $cliente->cedula]
@@ -205,8 +205,8 @@ class ClientesModelo extends BaseModelo
                 [
                     'id_tipo' => $membresia->id_tipo,
                     'id_estado' => $membresia->id_estado,
-                    'fecha_inicio' => Validador::dateToString($membresia->fecha_inicio),
-                    'fecha_fin' => Validador::dateToString($membresia->fecha_fin),
+                    'fecha_inicio' => Validator::dateToString($membresia->fecha_inicio),
+                    'fecha_fin' => Validator::dateToString($membresia->fecha_fin),
                 ],
                 ['id_membresia' => $membresiaId],
             );
