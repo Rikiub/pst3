@@ -23,6 +23,7 @@
 
     button {
         background-color: var(--pico-primary-background);
+        padding: 1rem;
         width: 50px;
 
         &:hover {

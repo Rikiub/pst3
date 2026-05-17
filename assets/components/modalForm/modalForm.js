@@ -15,6 +15,7 @@ import Alpine from "alpinejs";
  * @param {{
  * page: string,
  * actions: Actions,
+ * extraPostBody: object?,
  * transformEditData?: (data: object) => object,
  * editDisableFields?: array<string>,
  * afterSubmit?: (mode: string) => void,
@@ -25,6 +26,7 @@ export function modalFormComponent(
     {
         page,
         actions,
+        extraPostBody = {},
         transformEditData = (data) => data,
         editDisableFields = [],
         afterSubmit = () => null,
@@ -43,12 +45,12 @@ export function modalFormComponent(
 
         handleOpenModal({ mode, id = null, dataId = null }) {
             if (!mode) return console.error("A 'mode' must be provided");
+            if (id !== componentId) return;
 
             // On Add
             if (mode === "add") return this.onAdd();
 
             // On Edit/Delete
-            if (id !== componentId) return;
             if (!dataId) {
                 return console.error("A 'dataId' must be provided");
             }
@@ -96,6 +98,7 @@ export function modalFormComponent(
                     body = FormDataJson.toJson(this.$refs.form, {
                         skipEmpty: true,
                     });
+                    body = { ...body, ...extraPostBody };
                 }
 
                 await fetchApi({ page: this.page, ...params }, {

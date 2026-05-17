@@ -7,30 +7,27 @@ const MODAL_EVENT = "open-modal";
 
 /**
  * @param {{
- * page: string,
- * action: string,
+ * params: object,
  * columns: array<string|object>,
  * fieldMap: (item: object) => array<string|int>,
- * gridOptions: object,
+ * gridOptions: object?,
+ * crudButtons: object?,
  * id?: string,
  * }}
  */
 export function crudTableComponent({
-    page,
-    action,
+    params,
     columns,
     fieldMap = (item) => item,
-    gridOptions,
+    gridOptions = {},
+    crudButtons = {},
     id: componentId = null,
 }) {
     return {
         grid: null,
 
         init() {
-            const query = new URLSearchParams({
-                page: page,
-                action: action,
-            });
+            const query = new URLSearchParams(params);
 
             this.grid = createGrid({
                 columns: columns,
@@ -39,7 +36,7 @@ export function crudTableComponent({
                     then: (data) => data.map((item) => fieldMap(item)),
                 },
                 crud: {
-                    onAdd: () => this.$dispatch(MODAL_EVENT, { mode: "add" }),
+                    onAdd: () => this.$dispatch(MODAL_EVENT, { id: componentId, mode: "add" }),
                     onEdit: (dataId) => {
                         this.$dispatch(MODAL_EVENT, {
                             id: componentId,
@@ -54,6 +51,7 @@ export function crudTableComponent({
                             mode: "delete",
                         });
                     },
+                    ...crudButtons
                 },
                 ...gridOptions,
             });

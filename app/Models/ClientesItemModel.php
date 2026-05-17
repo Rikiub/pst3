@@ -12,7 +12,7 @@ readonly class SeguimientoFisicoDTO
     public function __construct(
         public ?int $id_seguimiento = null,
         public ?string $cedula_cliente = null,
-        public ?DateTimeImmutable $fecha = null,
+        public ?DateTimeImmutable $fecha = new DateTimeImmutable(),
         public ?float $altura_cm = null,
         public ?float $peso_kg = null,
         public ?float $cintura_cm = null,
@@ -74,10 +74,14 @@ class ClientesItemModel extends BaseModel
      * Obtiene todos los seguimientos de un cliente.
      * @return array<SeguimientoFisicoDTO>
      */
-    public function getByCliente(string $cedula): array
+    public function getAllByCliente(string $cedula): array
     {
         $stmt = $this->pdo->prepare(
-            $this->sqlSelect() . ' WHERE cedula_cliente = ? ORDER BY fecha DESC'
+            <<<SQL
+                {$this->sqlSelect()} 
+                WHERE cedula_cliente = ?
+                ORDER BY fecha DESC
+            SQL
         );
         $stmt->execute([$cedula]);
         $rows = $stmt->fetchAll();
@@ -91,7 +95,10 @@ class ClientesItemModel extends BaseModel
     public function findById(int $id): SeguimientoFisicoDTO|false
     {
         $stmt = $this->pdo->prepare(
-            $this->sqlSelect() . ' WHERE id_seguimiento = ?'
+            <<<SQL
+                {$this->sqlSelect()} 
+                WHERE id_seguimiento = ?
+            SQL
         );
         $stmt->execute([$id]);
         $row = $stmt->fetch();

@@ -35,22 +35,21 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
             <button
                 data-tooltip="Editar"
                 data-placement="bottom"
-                @click="$dispatch('open-modal', { mode: 'edit', dataId: '<?= $cliente->cedula ?>' })"
-            >
+                @click="$dispatch('open-modal', { mode: 'edit', dataId: '<?= $cliente->cedula ?>', id: 'clientes' })">
                 <i class="fa-pen-to-square fa-solid"></i>
             </button>
 
             <button
                 data-tooltip="Eliminar"
                 data-placement="bottom"
-                @click="$dispatch('open-modal', { mode: 'delete', dataId: '<?= $cliente->cedula ?>' })"
-            >
+                @click="$dispatch('open-modal', { mode: 'delete', dataId: '<?= $cliente->cedula ?>', id: 'clientes' })">
                 <i class="fa-solid fa-trash-can"></i>
             </button>
         </div>
     </header>
 
-    <div class="grid">
+    <!-- Información del cliente -->
+    <section class="grid">
         <article>
             <header>
                 <h3>Información</h3>
@@ -61,7 +60,7 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
                     <h5>Telefono</h5>
                     <p><?= $cliente->telefono ?></p>
                 </hgroup>
-            
+
                 <hgroup>
                     <h5>Correo</h5>
                     <p><?= $cliente->correo ?></p>
@@ -115,5 +114,15 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
                 </hgroup>
             </div>
         </article>
-    </div>
+    </section>
 </article>
+
+<!-- Informacion Biometrica -->
+<section>
+    <?= $this->insert('crudTable', ['alpineComponent' => 'crudSegFisico']) ?>
+
+    <?= $this->insert('modalForm', [
+        'alpineComponent' => 'modalSegFisico',
+        'formHtml' => $this->fetch('clientes/forms/seguimiento_fisico'),
+    ]) ?>
+</section>

@@ -3,8 +3,8 @@ import { Grid, h, PluginPosition } from "gridjs";
 /** Crea una tabla de datos adaptada para CRUDs
  * @param {object} options
  */
-export function createGrid(options) {
-    if (options.crud) {
+export function createGrid(options = {}) {
+    if (options.crud?.onEdit || options.crud?.onDelete) {
         options.columns?.push(
             crudButtons(options.crud.onEdit, options.crud.onDelete),
         );
@@ -57,7 +57,7 @@ function addButton(callback) {
     return h("button", {
         className: "crud-actions-add",
         "data-tooltip": "Crear",
-        "data-placement": "left",
+        "data-placement": "bottom",
         onClick: callback,
     }, h("i", { className: "fa-solid fa-square-plus" }));
 }
@@ -70,16 +70,20 @@ export function crudButtons(onEdit, onDelete) {
         data: () => null,
         formatter: (cell, row) => {
             return h("div", { className: "crud-actions" }, [
-                h("button", {
-                    className: "button-edit",
-                    "data-tooltip": "Editar",
-                    onClick: () => onEdit(row.cells[0].data),
-                }, h("i", { className: "fa-solid fa-pen-to-square" })),
-                h("button", {
-                    className: "button-delete",
-                    "data-tooltip": "Eliminar",
-                    onClick: () => onDelete(row.cells[0].data),
-                }, h("i", { className: "fa-solid fa-trash-can" })),
+                onEdit
+                    ? h("button", {
+                        className: "button-edit",
+                        "data-tooltip": "Editar",
+                        onClick: () => onEdit(row.cells[0].data),
+                    }, h("i", { className: "fa-solid fa-pen-to-square" }))
+                    : "",
+                onDelete
+                    ? h("button", {
+                        className: "button-delete",
+                        "data-tooltip": "Eliminar",
+                        onClick: () => onDelete(row.cells[0].data),
+                    }, h("i", { className: "fa-solid fa-trash-can" }))
+                    : "",
             ]);
         },
     };

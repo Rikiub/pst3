@@ -5,11 +5,17 @@ import { fetchApi } from "@/js/api.js";
 import Alpine from "alpinejs";
 import { h } from "gridjs";
 
+// CLIENTES
 const CLIENTES_PAGE = "clientes";
+const clientesId = "clientes";
 
 Alpine.data("crudTableClientes", () =>
     crudTableComponent({
-        page: CLIENTES_PAGE,
+        id: clientesId,
+        params: {
+            page: CLIENTES_PAGE,
+            action: "getClientes",
+        },
         action: "getClientes",
         columns: [
             {
@@ -39,6 +45,7 @@ Alpine.data("crudTableClientes", () =>
 
 Alpine.data("modalFormClientes", (isSinglePage = false) => ({
     ...modalFormComponent({
+        id: clientesId,
         page: CLIENTES_PAGE,
         actions: {
             onAdd: "insertCliente",
@@ -86,4 +93,71 @@ Alpine.data("modalFormClientes", (isSinglePage = false) => ({
             }
         }
     },
+}));
+
+const clientesItemPage = "ClientesItem";
+
+// SEGUIMIENTO FISICO
+const idSegFisico = "seg_fisico";
+
+Alpine.data("crudSegFisico", () =>
+    crudTableComponent({
+        id: idSegFisico,
+        params: {
+            page: clientesItemPage,
+            action: "getSegFisicoByCliente",
+            id: new URLSearchParams(location.search).get("id")
+        },
+        columns: [
+            {
+                name: "ID Seguimiento",
+                hidden: true,
+            },
+            {
+                name: "Cedula Cliente",
+                hidden: true,
+            },
+            {
+                name: "Fecha",
+                formatter: (cell) => new Date(cell).toLocaleDateString("en-US")
+            },
+            "Altura",
+            "Peso",
+            "Cintura",
+            "Cadera",
+            "Pecho",
+            "Muslo",
+            "Hombros",
+        ],
+        gridOptions: {
+            search: false,
+        },
+        crudButtons: {
+            onEdit: null
+        },
+        fieldMap: (item) => [
+            item.id_seguimiento,
+            item.cedula_cliente,
+            item.fecha,
+            item.altura_cm,
+            item.peso_cm,
+            item.cintura_cm,
+            item.cadera_cm,
+            item.pecho_cm,
+            item.muslo_cm,
+            item.hombros_cm,
+        ],
+    }));
+
+Alpine.data("modalSegFisico", () => modalFormComponent({
+    id: idSegFisico,
+    page: clientesItemPage,
+    actions: {
+        onAdd: "insertSegFisico",
+        onEdit: "updateSegFisico",
+        onDelete: "deleteSegFisico",
+    },
+    extraPostBody: {
+        cedula_cliente: new URLSearchParams(location.search).get("id"),
+    }
 }));

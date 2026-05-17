@@ -45,7 +45,7 @@ class ClientesItemController extends BaseController
 
     private function getCedulaParam(): string
     {
-        $cedula = $_GET['cedula'] ?? $_GET['id'] ?? '';
+        $cedula = $_GET['cedula_cliente'] ?? $_GET['cedula'] ?? $_GET['id'] ?? null;
         if (!$cedula) {
             throw new Exception("'id' or 'cedula' param is required");
         }
@@ -54,7 +54,7 @@ class ClientesItemController extends BaseController
 
     // SEGUIMIENTO FISICO: JSON API
 
-    public function getSeguimientoByCliente(): ?string
+    public function getSegFisicoByCliente(): ?string
     {
         $cedula = $this->getCedulaParam();
 
@@ -62,20 +62,20 @@ class ClientesItemController extends BaseController
             return $this->response->empty(404);
         }
 
-        $registros = $this->segModelo->getByCliente($cedula);
+        $registros = $this->segModelo->getAllByCliente($cedula);
         return $this->response->json($registros);
     }
 
-    public function insertSeguimiento(): string
+    public function insertSegFisico(): string
     {
         $body = $this->response->getParsedBody();
 
         // Valida el POST
         $registro = $this->mapper->map(SeguimientoFisicoDTO::class, $body);
 
-        // Verificar que el cliente no exista
-        if ($this->clientesModelo->findByCedula($registro->cedula_cliente)) {
-            return $this->response->json(['message' => 'El cliente ya existe'], 400);
+        // Verificar que el cliente exista
+        if (!$this->clientesModelo->findByCedula($registro->cedula_cliente)) {
+            return $this->response->json(['message' => 'El cliente no existe'], 404);
         }
 
         // Crea el cliente
@@ -85,7 +85,7 @@ class ClientesItemController extends BaseController
         return $this->response->json($cliente, 201);
     }
 
-    public function updateSeguimiento(): string
+    public function updateSegFisico(): string
     {
         $cedula = $this->getCedulaParam();
 
@@ -102,15 +102,15 @@ class ClientesItemController extends BaseController
         return $this->response->json($registro, 201);
     }
 
-    public function deleteSeguimiento(): string|null
+    public function deleteSegFisico(): string|null
     {
-        $cedula = $this->getCedulaParam();
+        $idSeguimiento = isset($_GET["id"]) ? intval($_GET["id"]) : null;
 
-        if (!$this->clientesModelo->findByCedula($cedula)) {
-            return $this->response->json(['message' => 'El cliente no existe'], 404);
+        if (!$this->segModelo->findById($idSeguimiento)) {
+            return $this->response->json(['message' => 'Seguimiento no existe'], 404);
         }
 
-        $this->segModelo->delete($cedula);
+        $this->segModelo->delete($idSeguimiento);
         return $this->response->empty(204);
     }
 }
