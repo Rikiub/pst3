@@ -1,4 +1,4 @@
-<? $this->layout('base', ['title' => 'Error']) ?>
+<?php $this->layout('base', ['title' => 'Error']) ?>
 
 <h1>Error</h1>
 

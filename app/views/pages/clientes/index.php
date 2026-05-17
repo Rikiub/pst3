@@ -18,7 +18,3 @@ $this->pushCss('pages/clientes/clientes.css');
         ]),
     ]) ?>
 </div>
-
-<script>
-    let xd = "";
-</script>
