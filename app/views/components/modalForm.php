@@ -1,7 +1,9 @@
 <?php
 $formHtml = $formHtml ?? '';
 $alpineComponent = $alpineComponent ?? 'modalForm';
+
 $this->pushJs('components/modalForm/modalForm.js');
+$this->pushCss('lib/picocss/pico.red.min.css');  // PicoCSS
 ?>
 
 <dialog
@@ -9,15 +11,13 @@ $this->pushJs('components/modalForm/modalForm.js');
     x-ref="modal"
     x-id="['form']"
     :closedby="loading ? 'none' : 'any'"
-    @open-modal.window="handleOpenModal($event.detail)"
->
+    @open-modal.window="handleOpenModal($event.detail)">
     <article>
         <header>
             <button
                 aria-label="Cerrar"
                 rel="prev"
-                @click="$refs.modal.close()"
-            ></button>
+                @click="$refs.modal.close()"></button>
 
             <h3 x-show="mode == 'add'">Crear</h3>
             <h3 x-show="mode == 'edit'">Editar</h3>
@@ -32,8 +32,7 @@ $this->pushJs('components/modalForm/modalForm.js');
             x-show="mode !== 'delete'" x-ref="form"
             @submit.prevent="handleSubmit"
             :id="$id('form')"
-            novalidate
-        >
+            novalidate>
             <?= $formHtml ?>
         </form>
 
@@ -42,16 +41,14 @@ $this->pushJs('components/modalForm/modalForm.js');
                 x-show="mode !== 'delete'"
                 :form="$id('form')"
                 :aria-busy="loading"
-                :disabled="loading"
-            >Enviar</button>
+                :disabled="loading">Enviar</button>
 
             <div x-show="mode == 'delete'">
                 <button class="secondary" @click="$refs.modal.close()">No</button>
                 <button
                     :form="$id('form')"
-                    :aria-busy="loading" 
-                    :disabled="loading"
-                >Si</button>
+                    :aria-busy="loading"
+                    :disabled="loading">Si</button>
             </div>
         </footer>
     </article>

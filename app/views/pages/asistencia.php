@@ -1,7 +1,4 @@
 <?php
-$this->pushJs("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js");
-$this->pushCss("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css");
-
 $this->pushJs("pages/asistencia/asistencia.js");
 
 $this->layout("layout", ["title" => "Control de asistencia"]);
@@ -107,7 +104,7 @@ $this->layout("layout", ["title" => "Control de asistencia"]);
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <input type="text" id="searchClient" class="search-client" placeholder="Seleccionar Cliente (buscar por cédula, nombre, correo o teléfono)">
+                <input type="text" id="searchClient" class="search-client form-control" placeholder="Seleccionar Cliente (buscar por cédula, nombre, correo o teléfono)">
                 <div class="table-responsive">
                     <table class="table table-hover" id="clientesTabla">
                         <thead>
@@ -186,6 +183,7 @@ $this->layout("layout", ["title" => "Control de asistencia"]);
 
 <style>
     .container {
+        --bs-gutter-x: 0;
         max-width: 1100px;
         margin: 0 auto;
         background: white;
@@ -458,9 +456,6 @@ $this->layout("layout", ["title" => "Control de asistencia"]);
     }
 
     @media (max-width: 768px) {
-        body {
-            padding: 1rem;
-        }
 
         td:last-child,
         th:last-child {

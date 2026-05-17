@@ -7,7 +7,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="light" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -28,15 +28,15 @@
     </script>
 
     <?php
-    $this->pushJs('lib/alpinejs/mask.min.js');
-
+    $this->pushJs('lib/alpinejs/mask.min.js'); // AlpineJS: Mask Plugin
     $this->pushCss('lib/gridjs/mermaid.min.css');  // GridJS
-    $this->pushCss('lib/picocss/pico.red.min.css');  // PicoCSS
-    $this->pushCss('lib/picocss/pico.colors.min.css');  // PicoCSS Colors
+
+    // Bootstrap
+    $this->pushCss("lib/bootstrap/bootstrap.min.css");
+    $this->pushJs("lib/bootstrap/bootstrap.bundle.min.js", false);
 
     // TODO: Deberia guardarse como archivos en la carpeta "lib"
     $this->pushCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-    $this->pushCss('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&display=swap');
 
     // Importes globales
     $this->pushCss('base/index.css');
@@ -45,7 +45,7 @@
 
     <?= $this->renderCss() ?>
     <?= $this->renderJs() ?>
-    
+
     <script type="module">
         import Alpine from 'alpinejs'
         window.Alpine = Alpine;
@@ -67,4 +67,3 @@
         <?= $this->section('content') ?>
     </div>
 </body>
-

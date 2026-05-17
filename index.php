@@ -1,7 +1,7 @@
 <?php
 
 // Constantes globales
-define('BASE_DIR', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/');
+define('BASE_DIR', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'));
 define('ASSETS_DIR', BASE_DIR . '/assets');
 
 // Cargar composer autoload y front controller

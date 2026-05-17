@@ -2,6 +2,7 @@
 
 /** @var array $formMeta */
 $this->layout('layout', ['title' => 'Clientes']);
+
 $this->pushJs('pages/clientes/clientes.js');
 $this->pushCss('pages/clientes/clientes.css');
 ?>

@@ -7,7 +7,8 @@
 
 $nombreCompleto = "$cliente->nombre $cliente->apellido";
 
-$this->layout('layout', ['title' => "Cliente: ". $nombreCompleto]);
+$this->layout('layout', ['title' => "Cliente: " . $nombreCompleto]);
+
 $this->pushJs('pages/clientes/clientes.js');
 $this->pushCss('pages/clientes/clientes.css');
 ?>

@@ -1,8 +1,4 @@
 <?php
-// Bootstrap
-$this->pushJs("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js");
-$this->pushCss("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css");
-
 // Page JS
 $this->pushJs("pages/facturacion/facturacion.js");
 
@@ -56,7 +52,7 @@ $this->layout("layout", ["title" => "facturacion"]);
                         </div>
                         <div class="form-group">
                             <label><i class="fas fa-dollar-sign"></i> Monto (USD)</label>
-                            <input type="number" step="0.01" id="monto_input" required>
+                            <input class="form-control" type="number" step="0.01" id="monto_input" required>
                         </div>
                         <div class="form-group">
                             <label><i class="fas fa-credit-card"></i> Método de pago</label>
@@ -67,7 +63,7 @@ $this->layout("layout", ["title" => "facturacion"]);
                         </div>
                         <div class="form-group">
                             <label><i class="fas fa-link"></i> URL comprobante (opcional)</label>
-                            <input type="url" name="comprobante_url" placeholder="https://ejemplo.com/comprobante.jpg">
+                            <input class="form-control" type="url" name="comprobante_url" placeholder="https://ejemplo.com/comprobante.jpg">
                         </div>
                         <div class="form-group">
                             <label><i class="fas fa-calendar-alt"></i> Fecha de pago</label>
@@ -209,7 +205,7 @@ $this->layout("layout", ["title" => "facturacion"]);
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <input type="text" id="searchClient" class="search-client" placeholder="Seleccionar Cliente (buscar por cédula, nombre, correo o teléfono)">
+                <input type="text" id="searchClient" class="search-client form-control" placeholder="Seleccionar Cliente (buscar por cédula, nombre, correo o teléfono)">
                 <div class="table-responsive">
                     <table class="table table-hover" id="clientesTabla">
                         <thead>
@@ -358,6 +354,7 @@ $this->layout("layout", ["title" => "facturacion"]);
 
 <style>
     .container {
+        --bs-gutter-x: 0;
         max-width: 1400px;
         margin: 0 auto;
         background: white;
