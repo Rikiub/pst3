@@ -119,10 +119,16 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
 
 <!-- Informacion Biometrica -->
 <section>
-    <?= $this->insert('crudTable', ['alpineComponent' => 'crudSegFisico']) ?>
+    <article>
+        <header>
+            <h3>Seguimiento Fisico</h3>
+        </header>
 
-    <?= $this->insert('modalForm', [
-        'alpineComponent' => 'modalSegFisico',
-        'formHtml' => $this->fetch('clientes/forms/seguimiento_fisico'),
-    ]) ?>
+        <?= $this->insert('crudTable', ['alpineComponent' => 'crudSegFisico']) ?>
+
+        <?= $this->insert('modalForm', [
+            'alpineComponent' => 'modalSegFisico',
+            'formHtml' => $this->fetch('clientes/forms/seguimiento_fisico'),
+        ]) ?>
+    </article>
 </section>
