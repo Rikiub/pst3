@@ -8,7 +8,7 @@
  * $this->layout('layout')
  * En cualquier vista.
  */
-$this->layout('base', ['title' => $titulo ?? null]);
+$this->layout('base', ['title' => $title ?? null]);
 $this->pushCss('base/layout/layout.css');
 
 $backgroundImage = ASSETS_DIR . '/base/layout/background.webp';

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Clientes;
 
 use App\Helpers\Validator;
 use App\Models\BaseModel;
@@ -58,14 +58,14 @@ readonly class SeguimientoFisicoDTO
     }
 }
 
-class ClientesItemModel extends BaseModel
+class SegumientoFisicoModel extends BaseModel
 {
     private function sqlSelect(): string
     {
         return 'SELECT * FROM seguimiento_fisico';
     }
 
-    private function mapSeguimiento(array $row): SeguimientoFisicoDTO
+    private function mapRow(array $row): SeguimientoFisicoDTO
     {
         return $this->mapper->map(SeguimientoFisicoDTO::class, $row);
     }
@@ -86,7 +86,7 @@ class ClientesItemModel extends BaseModel
         $stmt->execute([$cedula]);
         $rows = $stmt->fetchAll();
 
-        return array_map([$this, 'mapSeguimiento'], $rows);
+        return array_map([$this, 'mapRow'], $rows);
     }
 
     /**
@@ -107,7 +107,7 @@ class ClientesItemModel extends BaseModel
             return false;
         }
 
-        return $this->mapSeguimiento($row);
+        return $this->mapRow($row);
     }
 
     /**

@@ -129,12 +129,6 @@ Alpine.data("crudSegFisico", () =>
             "Muslo",
             "Hombros",
         ],
-        gridOptions: {
-            search: false,
-        },
-        crudButtons: {
-            onEdit: null
-        },
         fieldMap: (item) => [
             item.id_seguimiento,
             item.cedula_cliente,
@@ -147,6 +141,12 @@ Alpine.data("crudSegFisico", () =>
             item.muslo_cm,
             item.hombros_cm,
         ],
+        gridOptions: {
+            search: false,
+        },
+        crudButtons: {
+            onEdit: null
+        },
     }));
 
 Alpine.data("modalSegFisico", () => modalFormComponent({
@@ -156,6 +156,66 @@ Alpine.data("modalSegFisico", () => modalFormComponent({
         onAdd: "insertSegFisico",
         onEdit: "updateSegFisico",
         onDelete: "deleteSegFisico",
+    },
+    extraPostBody: {
+        cedula_cliente: new URLSearchParams(location.search).get("id"),
+    }
+}));
+
+
+// SEGUIMIENTO NUTRICIONAL
+const idSegNutricional = "seg_nutricional";
+
+Alpine.data("crudSegNutricional", () =>
+    crudTableComponent({
+        id: idSegNutricional,
+        params: {
+            page: clientesItemPage,
+            action: "getSegNutricionalByCliente",
+            id: new URLSearchParams(location.search).get("id")
+        },
+        columns: [
+            {
+                name: "ID Seguimiento",
+                hidden: true,
+            },
+            {
+                name: "Cedula Cliente",
+                hidden: true,
+            },
+            {
+                name: "Fecha",
+                formatter: (cell) => new Date(cell).toLocaleDateString("en-US")
+            },
+            "Proteinas (g)",
+            "Carbohidratos (g)",
+            "Grasas (g)",
+            "Calorias Diarias",
+        ],
+        fieldMap: (item) => [
+            item.id_seguimiento,
+            item.cedula_cliente,
+            item.fecha,
+            item.proteinas_g,
+            item.carbohidratos_g,
+            item.grasas_g,
+            item.calorias_diarias,
+        ],
+        gridOptions: {
+            search: false,
+        },
+        crudButtons: {
+            onEdit: null
+        },
+    }));
+
+Alpine.data("modalSegNutricional", () => modalFormComponent({
+    id: idSegNutricional,
+    page: clientesItemPage,
+    actions: {
+        onAdd: "insertSegNutricional",
+        onEdit: "updateSegNutricional",
+        onDelete: "deleteSegNutricional",
     },
     extraPostBody: {
         cedula_cliente: new URLSearchParams(location.search).get("id"),

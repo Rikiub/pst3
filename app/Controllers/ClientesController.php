@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ClienteDTO;
-use App\Models\ClientesModel;
+use App\Models\Clientes\ClienteDTO;
+use App\Models\Clientes\ClientesModel;
 use Exception;
 
 class ClientesController extends BaseController

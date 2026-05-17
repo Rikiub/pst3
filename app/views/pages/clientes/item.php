@@ -2,13 +2,14 @@
 
 /**
  * @var array $formMeta
- * @var App\Models\ClienteDTO $cliente
+ * @var App\Models\Clientes\ClienteDTO $cliente
  */
-$this->layout('layout', ['title' => 'Cliente']);
+
+$nombreCompleto = "$cliente->nombre $cliente->apellido";
+
+$this->layout('layout', ['title' => "Cliente: ". $nombreCompleto]);
 $this->pushJs('pages/clientes/clientes.js');
 $this->pushCss('pages/clientes/clientes.css');
-
-$nombreCompleto = "$cliente->nombre $cliente->apellido"
 ?>
 
 <?= $this->insert('modalForm', [
@@ -57,10 +58,17 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
 
             <div class="grid">
                 <hgroup>
+                    <h5>Cédula</h5>
+                    <p><?= $cliente->cedula ?></p>
+                </hgroup>
+
+                <hgroup>
                     <h5>Telefono</h5>
                     <p><?= $cliente->telefono ?></p>
                 </hgroup>
+            </div>
 
+            <div class="grid">
                 <hgroup>
                     <h5>Correo</h5>
                     <p><?= $cliente->correo ?></p>
@@ -117,7 +125,7 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
     </section>
 </article>
 
-<!-- Informacion Biometrica -->
+<!-- Seguimiento Fisico -->
 <section>
     <article>
         <header>
@@ -129,6 +137,22 @@ $nombreCompleto = "$cliente->nombre $cliente->apellido"
         <?= $this->insert('modalForm', [
             'alpineComponent' => 'modalSegFisico',
             'formHtml' => $this->fetch('clientes/forms/seguimiento_fisico'),
+        ]) ?>
+    </article>
+</section>
+
+<!-- Seguimiento Nutricional -->
+<section>
+    <article>
+        <header>
+            <h3>Seguimiento Nutricional</h3>
+        </header>
+
+        <?= $this->insert('crudTable', ['alpineComponent' => 'crudSegNutricional']) ?>
+
+        <?= $this->insert('modalForm', [
+            'alpineComponent' => 'modalSegNutricional',
+            'formHtml' => $this->fetch('clientes/forms/seguimiento_nutricional'),
         ]) ?>
     </article>
 </section>
